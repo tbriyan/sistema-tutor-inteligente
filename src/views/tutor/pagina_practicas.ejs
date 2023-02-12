@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <!--LOCAL STYLES-->
+    <link rel="stylesheet" href="/css/bootstrap-lumen.min.css">
+    <link rel="stylesheet" href="/icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/alertify.min.css">
+    <link rel="stylesheet" href="/css/default.min.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+</head>
+
+<body>
+    <%- include("../../views/fragments/navbar", {rol : 2, usuarios : false, cursos : false, analiticas : false, practicas : true}) %>
+    
+    <div class="container">
+        <div class="row mt-3 d-flex justify-content-center">
+            <div class="card" style="max-width: 600px;">
+                <div class="card-body">
+                    <h5 class="text-center"><strong>Base de Preguntas</strong></h5>
+                    <br>
+                    <form action="" class="form">
+                        <div class="d-flex justify-content-between">
+                            <div class="form-group mb-3">
+                                <input id="nombre" type="text" class="form-control" autocomplete="off" placeholder="Ingrese una pregunta">
+                            </div>
+                            <div>
+                                opc 1
+                                opc2
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>        
+</body>
+
+</html>

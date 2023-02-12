@@ -1,0 +1,20 @@
+<div class="row mt-3">
+    <div class="col-lg-6">
+        <div class="d-flex align-items-center jc-center">
+            <div class="header me-5">
+                <% if (user.path_photo) { %>
+                    <img src="<%= user.path_photo %>" alt="header-profile" class="img-header">
+                <% } else {%>
+                    <img src="/img/profile.jpg" alt="header-profile" class="img-header">
+                <% } %>
+                
+            </div>
+            <div>
+                <h3 class="py-0 my-0 text-capitalize">
+                    <%= user.nombre+" "+user.apellido1 %> </h3>
+          <p class=" py-0 my-0">@<%= user.username %>
+                            </p>
+            </div>
+        </div>
+    </div>
+</div>

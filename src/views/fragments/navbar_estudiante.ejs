@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/img/logo.png" alt="" width="50px" height="50px" style="border-radius: 50%; object-fit: cover;">
+            <span>Quim<strong>Tutor</strong></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-mobile"
+            aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-mobile">
+            <ul class="navbar-nav ms-auto ul">
+                <li class="me-5"><a href="/"><span>Pagina de Inicio</span></a></li>
+                <li class="me-5"><a href="/tutor/avance"><span>Avance</span></a></li>
+                <li class="me-5"><a href="/tutor/evaluaciones"><span>Ver Evaluaciones</span></a></li>
+                <li class="me-5"><a href="#"><span>Tabla Periodica</span></a></li>
+                <li class="me-5"><a href="/user/profile"><span>Configuración</span></a></li>
+                <li class="me-5"><a href="/logout"><span>Salir</span></a></li>
+            </ul>
+            <ul class="navbar-nav ms-auto"></ul>
+            <div class="d-flex align-items-center">
+                <div class="dropdown dropdown-aside">
+                    <span class="text-light" id="profile" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">
+                        <strong class="text-capitalize"><%= name %> </strong>
+                    </span>
+                    <div class="dropdown-menu" style="margin-left: -70px;">
+                        <a class="dropdown-item" href="/">Pagina de Inicio</a>
+                        <a class="dropdown-item" href="/user/profile">Configuración</a>
+                        <a class="dropdown-item" href="/logout">Salir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

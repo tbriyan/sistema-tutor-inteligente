@@ -1,0 +1,27 @@
+{
+
+    "1" : [
+        {
+            "pregunta" : "Cual es la capital de Bolivia",
+            "opciones" : ["La Paz", "Cochabamba", "Chuquisaca"],
+            "respuesta" : "Chuquisaca"
+        },
+        {
+            "pregunta" : "Cuantas operaciones  matematicas exiten?",
+            "opciones" : ["4", "3", "0", "ninguna de las anteriores"],
+            "respuesta" : "4"
+        },
+        {
+            "pregunta" : "La sopa de letras se come?",
+            "opciones" : ["si", "no"],
+            "respuesta" : "si"
+        }
+    ],
+    "2" : [
+        {
+            "pregunta" : "222Cual es la capital de Peru",
+            "opciones" : ["Lima", "Cochabamba", "Chuquisaca"],
+            "respuesta" : "Lima"
+        }
+    ]
+}

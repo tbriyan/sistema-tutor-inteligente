@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template report0</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <h3 class="text-center"><strong>Lista General por Curso</strong></h3>
+    <p class="text-center">A continuación se presenta la lista general de estudiantes y los puntajes obtenidos en cada Leccion</p>
+    <br>
+    <table class="table table-bordered">
+        <thead style="background-color: rgb(66, 66, 66);color:white;">
+          <tr>
+            <th scope="col" class="text-center">N°</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">PL1</th>
+            <th scope="col">PL2</th>
+            <th scope="col">PL3</th>
+            <th scope="col">PL4</th>
+            <th scope="col">PL5</th>
+            <th scope="col">PL6</th>
+            <th scope="col" class="text-center">Promedio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each result}}
+          <tr>
+            <th scope="row" class="text-center">{{@key}}</th>
+            <td>{{this.persona.nombre}}</td>
+            {{#ifCond this.persona.sexo '==' 'F'}}
+              <td>Femenino</td>
+            {{/ifCond}}
+            {{#ifCond this.persona.sexo '==' 'M'}}
+              <td>Masculino</td>
+            {{/ifCond}}
+            {{#each this.notas}}
+              {{#ifCond this.puntaje "!=" null}}
+                <td>{{this.puntaje}}</td>
+              {{else}}
+                <td>0</td>
+              {{/ifCond}}
+            {{/each}}
+            {{#ifCond this.promedio "!=" null}}
+              <td class="text-center">{{this.promedio}}</td>
+            {{else}}
+              <td class="text-center">0</td>
+            {{/ifCond}}
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+</body>
+</html>

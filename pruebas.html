@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .seleccionar input[type="radio"] + label{
+            font-weight: bold;
+            line-height: 3em;
+            color: #a09d9d;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+        .seleccionar input[type="radio"] + label:before{
+            content: "";
+            width: 26px;
+            height: 26px;
+            float: left;
+            margin: 0.5em 0.5em 0 0;
+            border: 2px solid #ccc;
+            background: #fff;
+            border-radius: 100%;
+        }
+        .seleccionar input[type="radio"]:checked + label:before{
+            border-color: #0fbf12;
+        }
+        .seleccionar input[type="radio"]:checked + label{
+            background: #c1eec2;
+        }
+        .seleccionar input[type="radio"]:checked + label:after {
+	        content: "";
+	        width: 0;
+	        height: 0;
+	        border: 7px solid #0fbf12;
+	        float: left;
+	        margin-left: -1.85em;
+	        margin-top: 1em;
+	        border-radius: 100%;
+        }
+        .seleccionar label{
+            font-weight: 600;
+	        color: #777777;
+	        margin-bottom: 11px;
+	        width: 100%;
+	        float: left;
+	        cursor: pointer;
+	        padding: 0 0.6em;
+	        box-sizing: border-box;
+	        background: #e6e6e6;
+	        transition: all 0.5s ease 0s;
+        }
+    </style>
+</head>
+<body>
+    <div class="seleccionar mt-3">
+        <input class="form-check-input" type="radio" name="respuesta" id="opc${i}" value="${opcion}" hidden>
+        <label class="form-check-label" for="opc${i}">
+          ${opcion}
+        </label>
+</div>
+</body>
+</html>

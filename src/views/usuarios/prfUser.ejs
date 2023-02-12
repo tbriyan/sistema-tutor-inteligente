@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Usuarios</title>
+    <!--LOCAL STYLES-->
+    <link rel="stylesheet" href="/css/bootstrap-lumen.min.css">
+    <link rel="stylesheet" href="/icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/alertify.min.css">
+    <link rel="stylesheet" href="/css/default.min.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+</head>
+
+<body>
+    <%- include("../../views/fragments/navbar", {rol : 2, usuarios : true, cursos : false, analiticas : false}) %>
+        <!--NAVBAR-->
+        <!--END NAVBAR-->
+        <div class="container-fluid">
+            <div class="row bg-info p-2" id="filtrar" hidden>
+                <span style="width: auto;"><strong>Listar por curso:</strong></span>
+                <select id="grado-curso-usuario" name="curso" style="width: auto;text-transform: uppercase;">
+                    <option value="1">CUARTO C</option>
+                </select>
+                <button onclick="listUsersByFilter(1, document.getElementById('grado-curso-usuario').value)"
+                    class="ms-2 btn btn-sm btn-secondary" style="width: auto;">Filtrar</button>
+            </div>
+            <div id="body">
+                <div class="row mt-3">
+                    <div class="col d-flex align-items-end">
+                        <button onclick="limpiarModal()" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#modalUsuario">
+                            <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                    <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                    <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                  </svg>
+                            </i>
+                            Agregar nuevo
+                        </button>
+                        <button href="#" onclick="getS()" class="btn btn-warning ms-3" data-bs-toggle="modal"
+                            data-bs-target="#modalNotas">
+                            <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-check" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                                  </svg>
+                            </i>
+                            Lista de Notas
+                        </button>
+
+                    </div>
+                    <div class="col text-center">
+                        <div id="titulo-curso" class="text-uppercase h5">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group justify-content-end">
+                            <input id="buscar" type="text" class="form-control" style="max-width: fit-content;"
+                                placeholder="Ingrese nombre" autocomplete="off">
+                            <button class="btn btn-success">
+                                <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                      </svg>
+                                </i>
+                                Buscar Usuario
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <div class="card-body bg-secondary">
+                                <h4 class="text-center">Resetear Contraseña</h4>
+                                <p>Devuelve la constraseña a sus valores por defecto: <span
+                                        class="badge bg-info">Apellido
+                                        Paterno</span></p>
+                                <div class="alert alert-dismissible alert-success">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    Debe Ingresar el <strong>Usuario</strong> de la cuenta a
+                                    <strong>Resetear</strong>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="form-group mb-3">
+                                        <label for="Nombre" class="form-label">Usuario</label>
+                                        <input id="reset" type="text" class="form-control" placeholder="Ingrese usuario"
+                                            autocomplete="off">
+                                    </div>
+                                    <div class="form-group">
+                                        <button onclick="resetear()" class="btn btn-warning" style="width: 100%;">
+                                            <i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
+                                                    <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                                                  </svg>
+                                            </i>
+                                            Resetear
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div id="card-table" class="card pb-5 bg-secondary">
+                            <div class="card-body">
+                                <div id="msg-notUsers" hidden>
+                                    <div class="alert alert-dismissible alert-primary">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                        <strong>Ooops aún no tienes usuarios</strong>. Puedes agregar uno con el boton
+                                        <strong>Agregar Nuevo</strong>.
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nro</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col" class="text-center">Usuario</th>
+                                            <th scope="col" class="text-center">Rol</th>
+                                            <th scope="col" class="text-center">Telefono</th>
+                                            <th scope="col" class="text-center">Sexo</th>
+                                            <th scope="col" class="text-center">Fecha Creación</th>
+                                            <th scope="col" class="text-end">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-rows">
+                                        <div id="pagination" class="row"
+                                            style="width: 100%;position: absolute;bottom: 0;">
+                                            <ul class="pagination justify-content-center">
+                                                <div id="paginas" class="d-flex">
+                                                </div>
+                                            </ul>
+                                        </div>
+                                    </tbody>
+                                </table>
+                                <div id="origin-table" class="text-center" hidden>
+                                    <button onclick="listUsers(1)" class="btn btn-warning">
+                                        <i>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"/>
+                                              </svg>
+                                        </i>
+                                        Regresar
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalUsuario" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Editar Usuario
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="" class="form">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-3">
+                                        <label for="Nombre" class="form-label">Nombre</label>
+                                        <input id="nombre" type="text" class="form-control" autocomplete="off">
+                                        <input id="id" type="text" hidden>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group mb-3">
+                                        <label for="Apellido1" class="form-label">Apellido
+                                            Paterno</label>
+                                        <input id="apellido1" type="text" class="form-control" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group mb-3">
+                                        <label for="Apellido2" class="form-label">Apellido
+                                            Materno</label>
+                                        <input id="apellido2" type="text" class="form-control" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group mb-3">
+                                        <label for="Telefono" class="form-label">Telefono</label>
+                                        <input id="telefono" type="text" class="form-control" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group mb-3">
+                                        <label for="Sexo" class="form-label">Sexo</label>
+                                        <select id="sexo" name="sexo" class="form-select"
+                                            aria-label="Default select example">
+                                            <option selected disabled>Seleccionar</option>
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button id="modal-btn" type="button" class="btn btn-primary" onclick="saveUser()"
+                                data-bs-dismiss="modal">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalNotas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Lista General de Notas por Unidad
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <div class="d-flex justify-content-between">
+                            <h5><strong>Lista General de Estudiantes - Puntaje Obtenido por leccion</strong></h5>
+                            <div>
+                                <button class="btn btn-warning btn-sm" onclick="g_report0()" id="generar_reporte">
+                                    <i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-pdf-fill" viewBox="0 0 16 16">
+                                            <path d="M5.523 10.424c.14-.082.293-.162.459-.238a7.878 7.878 0 0 1-.45.606c-.28.337-.498.516-.635.572a.266.266 0 0 1-.035.012.282.282 0 0 1-.026-.044c-.056-.11-.054-.216.04-.36.106-.165.319-.354.647-.548zm2.455-1.647c-.119.025-.237.05-.356.078a21.035 21.035 0 0 0 .5-1.05 11.96 11.96 0 0 0 .51.858c-.217.032-.436.07-.654.114zm2.525.939a3.888 3.888 0 0 1-.435-.41c.228.005.434.022.612.054.317.057.466.147.518.209a.095.095 0 0 1 .026.064.436.436 0 0 1-.06.2.307.307 0 0 1-.094.124.107.107 0 0 1-.069.015c-.09-.003-.258-.066-.498-.256zM8.278 4.97c-.04.244-.108.524-.2.829a4.86 4.86 0 0 1-.089-.346c-.076-.353-.087-.63-.046-.822.038-.177.11-.248.196-.283a.517.517 0 0 1 .145-.04c.013.03.028.092.032.198.005.122-.007.277-.038.465z"/>
+                                            <path fill-rule="evenodd" d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm.165 11.668c.09.18.23.343.438.419.207.075.412.04.58-.03.318-.13.635-.436.926-.786.333-.401.683-.927 1.021-1.51a11.64 11.64 0 0 1 1.997-.406c.3.383.61.713.91.95.28.22.603.403.934.417a.856.856 0 0 0 .51-.138c.155-.101.27-.247.354-.416.09-.181.145-.37.138-.563a.844.844 0 0 0-.2-.518c-.226-.27-.596-.4-.96-.465a5.76 5.76 0 0 0-1.335-.05 10.954 10.954 0 0 1-.98-1.686c.25-.66.437-1.284.52-1.794.036-.218.055-.426.048-.614a1.238 1.238 0 0 0-.127-.538.7.7 0 0 0-.477-.365c-.202-.043-.41 0-.601.077-.377.15-.576.47-.651.823-.073.34-.04.736.046 1.136.088.406.238.848.43 1.295a19.707 19.707 0 0 1-1.062 2.227 7.662 7.662 0 0 0-1.482.645c-.37.22-.699.48-.897.787-.21.326-.275.714-.08 1.103z"/>
+                                          </svg>
+                                    </i>
+                                    Generar Lista
+                                </button>
+                                <button class="btn btn-warning btn-sm" id="esperar_reporte" hidden>
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            Cargando...
+                                        </div>
+                                        <div class="ms-3 spinner-border text-light" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </button>
+                                <a class="btn btn-success btn-sm" id="descargar_reporte" hidden download="nota-general">
+                                    <i class="me-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                        </svg>
+                                    </i>
+                                    Descargar
+                                </a>
+                            </div>
+                        </div>
+                        <table class="table mt-5">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th class="text-center">N°</th>
+                                    <th class="text-start">Nombre</th>
+                                    <th class="text-center">Genero</th>
+                                    <th class="text-center">PL1</th>
+                                    <th class="text-center">PL2</th>
+                                    <th class="text-center">PL3</th>
+                                    <th class="text-center">PL4</th>
+                                    <th class="text-center">PL5</th>
+                                    <th class="text-center">PL6</th>
+                                    <th class="text-center">Promedio</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-modal-body">
+                            </tbody>
+                        </table>
+                        <p>
+                            Donde:
+                            <br>
+                            <ul>
+                                <li>PL1: Introducción a la Química</li>
+                                <li>PL2: Función Óxidos</li>
+                                <li>PL3: Función Hidróxidos</li>
+                                <li>PL4: Función Hidruros</li>
+                                <li>PL5: Función Acidos</li>
+                                <li>PL6: Radicales</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalNotaEst" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <strong>DETALLES DEL ESTUDIANTE</strong>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="detalles-est">
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <script src="/js/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/alertify.min.js"></script>
+        <script src="/js/usuarios/prfUser.js"></script>
+        <script>
+            async function g_report0(){
+                let id_curso = sessionStorage.getItem("curso");
+                $("#generar_reporte").attr("hidden", "");
+                $("#esperar_reporte").removeAttr("hidden");
+                let result =  await $.ajax({
+                    type: "get",
+                    url : `/course/${id_curso}/report0`
+                });
+                if(result){
+                    $("#esperar_reporte").attr("hidden", "");
+                    $("#descargar_reporte").removeAttr("hidden");
+                    $("#descargar_reporte").attr("href", "/docs/"+result);
+                }
+                console.log(result);
+            }
+        </script>
+</body>
+
+</html>

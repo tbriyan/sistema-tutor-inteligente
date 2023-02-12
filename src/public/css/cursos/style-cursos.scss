@@ -1,0 +1,50 @@
+$primary-color: #158CBA;
+$text-black : black;
+.animation{
+    transition: 0.3s all ease-in-out;
+}
+body{
+    & #btn-addCourse{
+        & a{
+            color: $primary-color;
+            @extend .animation;
+            &:hover{
+                color: grey;
+            }
+        }
+    }
+    & #card-body{
+        background-color: #158CBA;
+        & #set-color{
+            @extend .animation;
+            &:hover{
+                color: $text-black;
+            }
+        }
+    }
+    & #editar{
+        color: $text-black;
+        cursor: default;
+        @extend .animation;
+        &:hover{
+            color: green;
+        }
+    }
+    & #eliminar{
+        color: $text-black;
+        cursor: default;
+        @extend .animation;
+        &:hover{
+            color: red;
+        }
+    }
+    & #estudiantes{
+        cursor: default;
+        & a{
+            @extend .animation;
+            &:hover{
+                opacity: 0.6;
+            }
+        }
+    }
+}

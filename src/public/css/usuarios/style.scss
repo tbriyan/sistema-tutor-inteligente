@@ -1,0 +1,106 @@
+//CONSTANT COLOR
+$primary-color : rgb(8, 153, 8);
+//CONSTANT COLOR END
+//TRANSITION
+.animation {
+    transition: 0.2s all ease-out;
+}
+//TRANSITION END
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #141E30;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #243B55, #141E30);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #243B55, #141E30);
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    & nav {
+        & .container-fluid {
+            & .navbar-brand {
+                & img {
+                    border-radius: 50%;
+                }
+            }
+            //& .navbar-toggler{}
+            & .navbar-collapse {
+                & ul {
+                    & li {
+                        & .active {
+                            color: $primary-color;
+                        }
+
+                        & a {
+                            @extend .animation;
+
+                            &:hover {
+                                color: $primary-color;
+                            }
+
+                            color: black;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+
+            & .d-flex {
+
+                //& #showUsername{}
+                & .dropdown {
+                    & #profile {
+                        @extend .animation;
+
+                        &:hover {
+                            opacity: 0.5;
+                        }
+
+                        & img {
+                            border: 1px solid black;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+                    }
+
+                    //& .dropdown-menu{}
+                }
+            }
+        }
+    }
+}
+
+@media (max-width:992px) {
+    nav {
+        & .container-fluid {
+
+            //& .navbar-brand{}
+            //& .navbar-toggler{}
+            & .navbar-collapse {
+                & ul {
+                    & li {
+                        &:last-child {
+                            border-bottom: 1px solid white;
+                        }
+
+                        text-align: center;
+                        border-top: 1px solid white;
+                        width: 100%;
+
+                        & a {
+                            display: block;
+                            padding: 10px 0px;
+                        }
+                    }
+                }
+            }
+
+            & .d-flex {
+                justify-content: center;
+                //& #showUsername{}
+                //& .dropdown{& #profile{& img{}}& .dropdown-menu{}}
+            }
+        }
+    }
+}

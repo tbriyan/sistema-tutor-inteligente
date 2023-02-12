@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil</title>
+    <link rel="stylesheet" href="/css/bootstrap-lumen.min.css">
+    <link rel="stylesheet" href="/icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/usuarios/profile.css">
+</head>
+
+<body>
+    <%- include("../../views/fragments/navbar", {rol : 1, usuarios : false, cursos : false, analiticas : false}) %> 
+
+    <div class="container">
+        <div class="row mt-4 mb-3">
+            <div class="text-center">
+                <div class="block-profile">
+                    <div id="show-profile" class="mb-2">
+                        <% if (user.path_photo) { %>
+                        <img id="photo-profile" src="<%= user.path_photo %> " alt="profile">             
+                        <% } else{%>
+                        <img id="photo-profile" src="/img/profile.jpg" alt="profile">             
+                        <% } %>
+                        <div id="photo-profile-over" class="d-none">
+                            <span><i class="bi bi-cloud-arrow-up-fill h1"></i></span>
+                            <span><strong>Cargar Foto</strong></span>
+                        </div>
+                    </div>
+                    <form id="form-profile" action="/user/photo-profile"  method="post" enctype="multipart/form-data" class="d-none">
+                        <input id="photo-upload" type="file" name="profile" hidden>
+                        <input type="submit" class="btn btn-sm btn-primary" value="GUARDAR">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5><strong>Datos Personales</strong></h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-lg-3"><strong>Nombre</strong></div>
+                                    <div class="col-lg-9">
+                                        <div id="name-before">
+                                            <div class="d-flex justify-content-between" hidden>
+                                                <span class="text-muted text-capitalize">
+                                                    <%= user.nombre %>
+                                                    <%= user.apellido1 %> 
+                                                    <%= user.apellido2 %> 
+                                                </span>
+                                                <span class="text-primary" onclick="toggleName()"
+                                                    style="cursor: pointer;">Editar</span>
+                                            </div>
+                                        </div>
+                                        <div id="name-after" class="d-none">
+                                            <form action="/user/profile/save-name" method="post">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-lg-4 px-0">
+                                                            <small><strong>Nombre</strong></small>
+                                                            <input class="form-control py-0 mt-2" type="text" name="nombre" value="<%= user.nombre %>">
+                                                        </div>
+                                                        <div class="col-lg-4 px-1">
+                                                            <small><strong>Apellido Paterno</strong></small>
+                                                            <input class="form-control py-0 mt-2" type="text" name="ap" value="<%= user.apellido1 %>">
+                                                        </div>
+                                                        <div class="col-lg-4 px-0">
+                                                            <small><strong>Apellido Materno</strong></small>
+                                                            <input class="form-control py-0 mt-2" type="text" name="am" value="<%= user.apellido2 %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center mt-3">
+                                                        <a class="btn btn-sm btn-secondary"
+                                                            onclick="toggleName()">Cancelar</a>
+                                                        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-lg-3"><strong>Fecha de Nacimiento</strong></div>
+                                    <div class="col-lg-9">
+                                        <div id="fecha-before">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-muted">
+                                                    <%= user.fecha_nac %>
+                                                </span>
+                                                <span class="text-primary" onclick="toggleFecha();"
+                                                    style="cursor: pointer;">Editar</span>
+                                            </div>
+                                        </div>
+                                        <div id="fecha-after" class="d-none">
+                                            <form action="/user/profile/save-nac" method="post">
+                                                <div class="form-group">
+                                                    <small><strong>Tu nacimiento</strong></small>
+                                                    <div class="d-flex mt-2">
+                                                        <input class="form-control py-0" type="date" name="fecha_nac" id="fecha_nac" value="<%= user.fecha_nac %>">
+                                                        <div class="d-flex">
+                                                            <a class="btn btn-sm btn-secondary" onclick="toggleFecha()">Cancelar</a>
+                                                            <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-lg-3"><strong>Sexo</strong></div>
+                                    <div class="col-lg-9">
+                                        <div id="sexo-before">
+                                            <div class="d-flex justify-content-between">
+                                                <span id="sexo" class="text-muted">
+                                                    <% if (user.sexo == "M") { %>
+                                                        Masculino
+                                                    <% } else if(user.sexo == "F"){%>
+                                                        Femenino
+                                                    <% } %>
+                                                </span>
+                                                <span class="text-primary" onclick="toggleSexo()"
+                                                    style="cursor: pointer;">Editar</span>
+                                            </div>
+                                        </div>
+                                        <div id="sexo-after" class="d-none">
+                                            <form action="/user/profile/save-sex" method="post">
+                                                <div class="form-group">
+                                                    <small><strong>Selecciona tu genero</strong></small>
+                                                    <div class="d-flex justify-content-center mb-3 mt-2">
+                                                        <div class="form-check me-2">
+                                                            <% if (user.sexo == "F") { %>
+                                                                <input class="form-check-input" type="radio" name="sexo" value="F" checked>
+                                                            <% }else{%>
+                                                                <input class="form-check-input" type="radio" name="sexo" value="F">
+                                                            <% } %> 
+                                                            <label class="form-check-label">Femenino</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <% if (user.sexo = "M") { %>
+                                                                <input class="form-check-input" type="radio" name="sexo" value="M" checked>
+                                                            <% } else{%>
+                                                                <input class="form-check-input" type="radio" name="sexo" value="M">
+                                                            <% } %>
+                                                            <label class="form-check-label">Masculino</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <a class="btn btn-sm btn-secondary" onclick="toggleSexo()">Cancelar</a>
+                                                        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-lg-3"><strong>Información de contacto</strong></div>
+                                    <div class="col-lg-9">
+                                        <div id="contacto-before">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-muted"><%= user.telefono %> </span> 
+                                                <span class="text-primary" onclick="toggleContacto()"
+                                                    style="cursor: pointer;">Editar</span>
+                                            </div>
+                                        </div>
+                                        <div id="contacto-after" class="d-none">
+                                            <form action="/user/profile/save-tel" method="post">
+                                                <div class="form-group">
+                                                    <small><strong>Numero de Telefono</strong></small>
+                                                    <div class="d-flex mt-2">
+                                                        <input class="form-control py-0" type="text" name="telefono" value="<%= user.telefono %> ">
+                                                        <div class="d-flex">
+                                                            <a class="btn btn-sm btn-secondary" onclick="toggleContacto()">Cancelar</a>
+                                                            <button class="btn btn-sm btn-primary">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5><strong>Información de la cuenta</strong></h5>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-lg-4"><strong>Nombre de Usuario</strong></div>
+                                    <div class="col-lg-8 d-flex justify-content-between">
+                                        <span class="text-muted"><%= user.username %> </span>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-lg-4"><strong>Contraseña</strong></div>
+                                    <div class="col-lg-8">
+                                        <div id="password-before">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-muted">*********</span>
+                                                <span class="text-primary" onclick="togglePassword()"
+                                                    style="cursor: pointer;">Cambiar</span>
+                                            </div>
+                                        </div>
+                                        <div id="password-after" class="d-none">
+                                            <form action="/user/profile/save-pass" method="post">
+                                                <div class="form-group">
+                                                    <small><strong>Nueva contraseña</strong></small>
+                                                    <br>
+                                                    <small class="text-warning">Se recomienda utilizar simbolos ($#/!\¡), mayusculas, minusculas y numeros.Para mantener su contraseña fuerte</small>
+                                                    <div class="d-flex mt-2">
+                                                        <input class="form-control py-0" type="password" name="password">
+                                                        <div class="d-flex">
+                                                            <a class="btn btn-sm btn-secondary" onclick="togglePassword()">Cancelar</a>
+                                                            <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/usuarios/profile.js"></script>
+</body>
+
+</html>

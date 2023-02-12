@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avance</title>
+    <link rel="stylesheet" href="/css/bootstrap-lumen.min.css">
+    <link rel="stylesheet" href="/css/tutor/pagina_principal.css">
+</head>
+<body>
+    <!--Navbar-->
+    <%- include("../../views/fragments/navbar_estudiante", {name : (user.nombre+" "+user.apellido1)}) %> 
+    <div class="container">
+        <%- include("../../views/fragments/navbar_header", {user}) %>
+        <div class="row mt-5">
+            <%- include("../../views/fragments/navbar_aside", {cursos: false, evaluaciones : false, avance : true, maestro : false}) %> 
+            <div class="col-lg-9 border-start px-4">
+                <div class="bg-primary py-1 text-light text-center">
+                    <h4 class="my-0 py-0"><strong>Control de avance</strong></h4>
+                </div>
+
+                <div class="row mt-3" id="show-avance">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/tutor/pagina_avance.js"></script>
+</body>
+</html>

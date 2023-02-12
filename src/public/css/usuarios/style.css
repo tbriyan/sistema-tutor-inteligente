@@ -1,0 +1,53 @@
+.animation, body nav .container-fluid .d-flex .dropdown #profile, body nav .container-fluid .navbar-collapse ul li a {
+  transition: 0.2s all ease-out;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #141E30;
+  /* fallback for old browsers */
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #243B55, #141E30);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+body nav .container-fluid .navbar-brand img {
+  border-radius: 50%;
+}
+body nav .container-fluid .navbar-collapse ul li .active {
+  color: rgb(8, 153, 8);
+}
+body nav .container-fluid .navbar-collapse ul li a {
+  color: black;
+  text-decoration: none;
+}
+body nav .container-fluid .navbar-collapse ul li a:hover {
+  color: rgb(8, 153, 8);
+}
+body nav .container-fluid .d-flex .dropdown #profile:hover {
+  opacity: 0.5;
+}
+body nav .container-fluid .d-flex .dropdown #profile img {
+  border: 1px solid black;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media (max-width: 992px) {
+  nav .container-fluid .navbar-collapse ul li {
+    text-align: center;
+    border-top: 1px solid white;
+    width: 100%;
+  }
+  nav .container-fluid .navbar-collapse ul li:last-child {
+    border-bottom: 1px solid white;
+  }
+  nav .container-fluid .navbar-collapse ul li a {
+    display: block;
+    padding: 10px 0px;
+  }
+  nav .container-fluid .d-flex {
+    justify-content: center;
+  }
+}/*# sourceMappingURL=style.css.map */

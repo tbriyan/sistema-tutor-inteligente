@@ -1,0 +1,367 @@
+/*************Navbar****************/
+
+@media (min-width: 992px) {
+  .ul li {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .ul {
+    padding-right: 0px;
+  }
+
+  .ul li {
+    background-color: white;
+    text-align: center;
+    width: 100%;
+  }
+
+  .ul li:last-child {
+    border-bottom: 1px solid white;
+  }
+
+  .ul li a {
+    display: block;
+    padding: 10px 0px;
+    text-decoration: none;
+  }
+
+  .dropdown-aside {
+    display: none;
+  }
+
+  .jc-center {
+    justify-content: center;
+  }
+}
+
+#profile strong:hover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 3px;
+  background-color: white;
+}
+
+/*************End Navbar****************/
+
+/*************style Links****************/
+
+.n-link {
+  text-decoration: none;
+  color: black;
+}
+
+.n-link:hover {
+  color: #007ACC;
+  text-decoration: underline;
+}
+
+/*************Fin style Links****************/
+
+/*************Panel Header****************/
+
+.header {
+  width: 100px;
+  height: 100px;
+}
+
+.img-header {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/****************Fin Panel Header*************/
+
+/*****************Panel cursos****************/
+
+.p-button {
+  background-color: #158CBA;
+  color: white;
+  font-size: small;
+  border: 2px solid #158CBA;
+  padding: 5px 15px;
+  border-radius: 3px;
+}
+
+.p-button:hover {
+  background-color: #15a2da;
+  border: 2px solid #15a2da;
+}
+
+.img-circle {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 40px;
+  height: 40px;
+}
+
+.img-circle-transform {
+  transform: scale(0.7);
+  width: 100%;
+  height: 100%;
+}
+
+.ic-desactivated {
+  opacity: 0.5;
+}
+
+.relative {
+  position: relative;
+}
+
+.connect::before {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 24px;
+  background-color: rgb(168, 164, 164);
+  top: -24px;
+  left: 19px;
+}
+
+/*****************Fin Panel cursos****************/
+
+/*****************Footer****************/
+
+footer {
+  color: white;
+  background-color: black;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+footer .company {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+footer .menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+footer .partners {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+footer .partners .logo-umsa img {
+  border-radius: 10px;
+}
+
+footer .partners .logo-colegio {
+  margin-top: 30px;
+}
+
+footer .partners .logo-colegio img {
+  border-radius: 10px;
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    margin: 0;
+  }
+
+  .navbar .navbar-collapse {
+    margin-top: 10px;
+  }
+
+  .nav-item {
+    padding: 10px 0px;
+    margin: 0;
+  }
+
+  .settings {
+    padding: 10px 0px;
+    justify-content: center;
+  }
+
+  .dropdown-menu {
+    background-color: white !important;
+  }
+
+  .dropdown-menu a {
+    color: black !important;
+  }
+
+  footer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  footer .menu {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  footer .partners {
+    grid-column: 1/-1;
+  }
+}
+
+@media (max-width: 768px) {
+  footer {
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: auto;
+  }
+
+  footer .company {
+    grid-row: 2/3;
+  }
+}
+
+/*****************Footer****************/
+
+/*****************Styles Quiz****************/
+.modal-body{
+  padding: 0;
+}
+.custom-contenido-evaluacion{
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+.custom-contenido-evaluacion div{
+  width: 100%;
+}
+.opciones{
+  padding: 0;
+  margin: auto;
+  max-width: 370px;
+  display: flex;
+  flex-direction: column;
+}
+.opciones .opcion{
+  list-style: none;
+  padding: 15px 5px;
+  margin: 10px 0px;
+  border-radius: 5px;
+  transition: 0.2s all ease-in-out;
+  color:#fff;
+  background-color:#158cba;
+  border-color:#158cba
+}
+.opciones .opcion:hover{
+  cursor: pointer;
+  color:#fff;
+  background-color:#12779e;
+  border-color:#117095
+}
+.quiz-padding{
+  margin: 0 100px;
+}
+@media (max-width: 768px) {
+  .custom-contenido-evaluacion{
+    padding: 0 20px;
+  }
+  .quiz-padding{
+    margin: 0 20px;
+  }
+}
+/*****************Fin Styles Quiz****************/
+/******************contenido-tema VIDEO******************/
+@media (min-width: 1024px) {
+  #video iframe{
+    width: 100%;
+    height: 75vh;
+  }
+  .contenido-tema-botones{
+    margin: 0 20px;
+  }
+}
+@media (max-width: 1023px) {
+  #video iframe{
+    width: 100%;
+    height: 75vh;
+  }
+  .contenido-tema-botones{
+    margin: 0 20px;
+  }
+}
+@media (max-width: 768px) {
+  .contenido-tema-botones{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px;
+  }
+}
+
+/******************Fin contenido-tema******************/
+   /*Estilos panel evaluacion*/
+#presentacion-evaluacion .frase{
+    font-weight: 600;
+}
+#presentacion-evaluacion .frase p{
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    margin: auto;
+    color: rgb(170, 165, 165);
+}
+@media (min-width: 1024px) {
+    #presentacion-evaluacion{
+        display: flex;
+        padding: 0 50px;
+    }
+    #presentacion-evaluacion .img-presentacion img{
+        width: 400px;
+    }
+    #presentacion-evaluacion .b-presentacion{
+        margin-top: 50px;
+    }
+    
+}
+@media (max-width: 1023px) {
+    #presentacion-evaluacion{
+        display: flex;
+        padding: 0 50px;
+    }
+    #presentacion-evaluacion .img-presentacion img{
+        width: 400px;
+    }
+}
+@media (max-width: 768px) {
+    #presentacion-evaluacion{
+        display: block;
+    }
+    #presentacion-evaluacion .img-presentacion img{
+        width: 80%;
+    }
+    #presentacion-evaluacion .b-presentacion{
+        margin-top: 10px;
+    }
+}
+/*Fin del bloque*/
+
+/*****************Miscelanea****************/
+.close-button {
+  background-color: grey;
+  font-size: small;
+  border: 2px solid grey;
+  font-size: 18px;
+  padding: 5px 25px;
+  border-radius: 3px;
+  text-decoration: none;
+  color: white;
+  transition: 0.3s all ease-in;
+}
+
+.close-button:hover {
+  background-color: rgb(209, 202, 202);
+  border: 2px solid rgb(209, 202, 202);
+  color: black;
+}
+
+.bg-black {
+  background-color: black;
+}
+
+/*****************Fin Miscelanea****************/

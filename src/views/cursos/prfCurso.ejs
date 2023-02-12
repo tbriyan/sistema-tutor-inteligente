@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos</title>
+    <!--LOCAL STYLES-->
+    <link rel="stylesheet" href="/css/bootstrap-lumen.min.css">
+    <link rel="stylesheet" href="icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/alertify.min.css">
+    <link rel="stylesheet" href="css/default.min.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/cursos/style-cursos.css">
+
+    <!--color picker-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css"/>
+</head>
+
+<body>
+    <%- include("../../views/fragments/navbar", {rol : 2, usuarios : false, cursos : true, analiticas : false}) %> 
+    
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <div class="col-lg-1 pe-0" id="btn-addCourse">
+                <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#cursoModal">
+                    <i class="bi bi-plus-circle-fill display-4" title="Agregar Nuevo Curso">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                      </svg>
+                    </i>
+                </a>
+            </div>
+            <div class="col-lg-11 ps-0">
+                <div class="row" id="dash-cursos">
+                </div>
+            </div>
+        </div>
+    </div>
+  <!-- Modal -->
+  <div class="modal fade" id="cursoModal" tabindex="-1" aria-labelledby="cursoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cursoModalLabel">AGREGAR CURSOS</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" class="form">
+            <div class="form-group mb-3">
+                <label class="form-label">GRADO DE SECUNDARIA</label>
+                <select id="grado" name="grado" class="form-select">
+                    <option value="primero">PRIMERO</option>
+                    <option value="segundo">SEGUNDO</option>
+                    <option value="tercero">TERCERO</option>
+                    <option value="cuarto">CUARTO</option>
+                    <option value="quinto">QUINTO</option>
+                    <option value="sexto">SEXTO</option>
+                </select>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label class="form-label">PARALELO</label>
+                <select id="paralelo" name="paralelo" class="form-select">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+            </div>
+            
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button onclick="saveCourse()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/alertify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    <script src="js/cursos/prfCurso.js"></script>
+</body>
+
+</html>

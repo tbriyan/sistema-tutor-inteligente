@@ -1,0 +1,36 @@
+.animation, body #estudiantes a, body #eliminar, body #editar, body #card-body #set-color, body #btn-addCourse a {
+  transition: 0.3s all ease-in-out;
+}
+
+body #btn-addCourse a {
+  color: #158CBA;
+}
+body #btn-addCourse a:hover {
+  color: grey;
+}
+body #card-body {
+  background-color: #158CBA;
+}
+body #card-body #set-color:hover {
+  color: black;
+}
+body #editar {
+  color: black;
+  cursor: default;
+}
+body #editar:hover {
+  color: green;
+}
+body #eliminar {
+  color: black;
+  cursor: default;
+}
+body #eliminar:hover {
+  color: red;
+}
+body #estudiantes {
+  cursor: default;
+}
+body #estudiantes a:hover {
+  opacity: 0.6;
+}/*# sourceMappingURL=style-cursos.css.map */
