@@ -178,6 +178,6 @@ insert into ejercicio0 values(4, 2, '{
 			"pregunta" : "¿Cual es el numero que deberia aparecer en la X del Oxido plumbico?",
 			"descripcion" : "Pb O<sub>X</sub>",
 			"respuesta" : "2"
-		},
+		}
 			]
 }');

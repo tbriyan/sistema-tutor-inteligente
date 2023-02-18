@@ -283,10 +283,6 @@ as $$
 		--====================Asignar Lecciones al Estudiante==================
 		insert into estudiante_leccion(id_estudiante, id_leccion) values (id_e, 1);
 		insert into estudiante_leccion(id_estudiante, id_leccion) values (id_e, 2);
-		insert into estudiante_leccion(id_estudiante, id_leccion) values (id_e, 3);
-		insert into estudiante_leccion(id_estudiante, id_leccion) values (id_e, 4);
-		insert into estudiante_leccion(id_estudiante, id_leccion) values (id_e, 5);
-		insert into estudiante_leccion(id_estudiante, id_leccion) values (id_e, 6);
 		
 		--====================Asignar Temas al Estudiante==================
 		
@@ -297,20 +293,10 @@ as $$
 		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 5);
 		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 6);
 		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 7);
-		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 8);
-		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 9);
-		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 10);
-		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 11);
-		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 12);
-		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 13);
 	
 		--====================Asignar Ejercicios al Estudiante==================
 		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 1);
 		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 2);
-		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 3);
-		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 4);
-		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 5);
-		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 6);
 		
 		return 'Estudiante creado con exito!';
 	end

@@ -82,7 +82,7 @@
                 <%- include("../../views/fragments/navbar_aside", {cursos : true, evaluaciones : false, avance : false,
                     maestro : false}) %>
                     <div class="col-lg-9 border-start px-4">
-                        <h3 class="mb-4"><strong>Mis Cursos</strong></h3>
+                        <h3 class="mb-4"><strong>Mis Lecciones</strong></h3>
                         <div class="row" id="leccion">
                             <div class="d-flex justify-content-center">
                                 <div class="spinner-grow" role="status">
@@ -208,18 +208,16 @@
                     <div class="menu-navegacion">
                         <strong>Menu de Navegacion</strong>
                         <ul>
-                            <li><a href="#">Lecciones</a></li>
-                            <li><a href="#">Ejercicios</a></li>
-                            <li><a href="#">Tabla Periodica</a></li>
-                            <li><a href="#">Evaluaciones</a></li>
+                            <li><a href="/">Lecciones</a></li>
+                            <li><a href="/tutor/evaluaciones">Evaluaciones</a></li>
+                            <li><a href="/tutor/avance">Avance</a></li>
                         </ul>
                     </div>
                     <div class="menu-adm">
-                        <strong>Menu de opciones adm</strong>
+                        <strong>Opciones de Usuario</strong>
                         <ul>
-                            <li><a href="#">Opcion ddd</a></li>
-                            <li><a href="#">Opcion ddd</a></li>
-                            <li><a href="#">Opcion ddd</a></li>
+                            <li><a href="/user/profile">Configuración</a></li>
+                            <li><a href="/logout">Salir</a></li>
                         </ul>
                     </div>
                 </div>
@@ -249,15 +247,19 @@
                         url: `/tutor/${id_tema}/tema-ejercicios`,
                         success: function (response) {
                             listaEjerTema = response.preguntas.lista;
+                            console.log(listaEjerTema);
                             mostrarPregunta(0);                                                                                
                         }
                     });
                 }
                 let respuestas = [];
                 let total_aciertos = 0;
+                let count = 0;
                 function mostrarPregunta(index){
                     //console.log(listaEjerTema[index])
-
+                    console.log('TAMANIO'+listaEjerTema.length);
+                    console.log("index"+index);
+                    count += 1;
                     if(index<listaEjerTema.length-1){
                         switch (listaEjerTema[index].tipo) {
                             case "completar":
@@ -413,6 +415,7 @@
                             }
                         });
                         $("#resultados-ejercicios").html(temp_pregunta);
+                        console.log(count);
                     }
                 }
                 function guardar_seleccionar(index){

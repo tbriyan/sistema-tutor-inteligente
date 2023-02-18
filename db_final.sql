@@ -128,10 +128,6 @@ create table hoja_estilo(
 --============================= DATOS PARA INGRESAR A LA COLUMNA LECCION ===========================
 insert into leccion(id_leccion, titulo) values(1, 'Introducción a la Química');
 insert into leccion(id_leccion, titulo) values(2, 'Función Óxidos');
-insert into leccion(id_leccion, titulo) values(3, 'Función Hidroxidos');
-insert into leccion(id_leccion, titulo) values(4, 'Función Hidruros');
-insert into leccion(id_leccion, titulo) values(5, 'Función Acidos');
-insert into leccion(id_leccion, titulo) values(6, 'Radicales');
 --============================= FIN DE DATOS PARA INGRESAR A LA COLUMNA LECCION ===========================
 
 --============================= DATOS PARA INGRESAR A COLUMNA "TEMA" ================================
@@ -142,12 +138,6 @@ insert into tema(id_tema, titulo, id_leccion, path_img) values(4, 'Oxidos Metál
 insert into tema(id_tema, titulo, id_leccion, path_img) values(5, 'Oxidos no Metálicos', 2, '/img/img-temas/l2-t2.png');
 insert into tema(id_tema, titulo, id_leccion, path_img) values(6, 'Peróxidos', 2, '/img/img-temas/l2-t3.png');
 insert into tema(id_tema, titulo, id_leccion, path_img) values(7, 'Superóxidos', 2, '/img/img-temas/l2-t4.png');
-insert into tema(id_tema, titulo, id_leccion, path_img) values(8, 'Oxidos Salinos', 2, '/img/img-temas/l2-t5.png');
-insert into tema(id_tema, titulo, id_leccion, path_img) values(9, 'Hidroxido - aun no definido', 3, '/img/img-temas/l3-t1.png');
-insert into tema(id_tema, titulo, id_leccion, path_img) values(10, 'Hidruros Metálicos', 4, '/img/img-temas/l4-t1.png');
-insert into tema(id_tema, titulo, id_leccion, path_img) values(11, 'Hidruros no Metálicos', 4, '/img/img-temas/l4-t2.png');
-insert into tema(id_tema, titulo, id_leccion, path_img) values(12, 'Acidos - Aun no definido', 5, '/img/img-temas/l5-t1.png');
-insert into tema(id_tema, titulo, id_leccion, path_img) values(13, 'Radicales - Aun no definido', 6, '/img/img-temas/l6-t1.png');
 --============================= FIN DE DATOS PARA INGRESAR AL TEMA================================
 
 --============================= DATOS PARA INGRESAR A LA COLUMNA EJERCICIO ==========================
@@ -156,18 +146,6 @@ values(1, 'Prueba tu habilidad introductoria, estudia los atomos y refuerza el c
 
 insert into ejercicio(id_ejercicio, descripcion, id_leccion) 
 values(2, 'Estas listo?, Metal o No Metal, pon a prueba tu conocimiento en Oxidos y sienta las bases de tu futuro!', 2);
-
-insert into ejercicio(id_ejercicio, descripcion, id_leccion) 
-values(3, 'Si te gustan los retos no esperes más por a prueba tu conocimiento con los Hidroxidos', 3);
-
-insert into ejercicio(id_ejercicio, descripcion, id_leccion) 
-values(4, 'Hidruros por a prueba tu conocimeint oen sasdfasdf', 4);
-
-insert into ejercicio(id_ejercicio, descripcion, id_leccion) 
-values(5, 'Acidos asdfkdkdkjd locaso jaja ssdfasdf', 5);
-
-insert into ejercicio(id_ejercicio, descripcion, id_leccion) 
-values(6, 'Radicasles asdjfaskdfjlaskdjflaksjdfdddd fasdf dfsdfgdsg', 6);
 --============================= FIN DE DATOS PARA INGRESAR A LA COLUMNA EJERCICIO ==========================
 
 --============================= BANCO DE DATOS DE PREGUNTAS PARA CADA EJERCICIO ==========================

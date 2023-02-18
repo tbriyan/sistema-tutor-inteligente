@@ -77,13 +77,16 @@ function listLecciones() {
     },
   });
 }
+let contarTema = 0;
 function getTema(id_tema) {
+  contarTema += 1;
+  console.log("cont : "+contarTema);
   $.ajax({
     type: "GET",
     url: `/tutor/${id_tema}/tema`,
     success: function (response) {
       let tema = response.tema;
-      if (tema.id_tema == tema.sizeLeccion) {
+      if (contarTema == tema.sizeLeccion) {
         $("#btn-tema-siguiente").attr("hidden", "");
         $("#btn-tema-evaluacion").removeAttr("hidden");
       }
@@ -95,14 +98,18 @@ function getTema(id_tema) {
         $("#video").html(`${response.tema.contenido}`); //Arreglarrrrrr
       }
       sessionStorage.setItem("sizeLeccion", tema.sizeLeccion);
+      console.log("tam-leccion :"+tema.sizeLeccion);
       sessionStorage.setItem("id_tema", tema.id_tema);
       sessionStorage.setItem("id_leccion", tema.id_leccion);
     },
   });
 }
 function siguienteTema() {
+  contarTema += 1;
+  console.log("cont : "+contarTema);
   let id_tema = parseInt(sessionStorage.getItem("id_tema"));
   let sizeLeccion = parseInt(sessionStorage.getItem("sizeLeccion"));
+  console.log("tam-leccion :"+sizeLeccion);
   //Cambiamos el estado a tema completado
   $.ajax({
     type: "POST",
@@ -110,12 +117,12 @@ function siguienteTema() {
     data: { id_tema, status: true },
     success: function (response) {},
   });
-  if (id_tema == sizeLeccion - 1) {
+  if (contarTema == sizeLeccion) {
     $("#btn-tema-siguiente").attr("hidden", "");
     $("#btn-tema-evaluacion").removeAttr("hidden");
   }
   //Verificamos si el tema pertenece a la leccion
-  if (id_tema < sizeLeccion) {
+  if (contarTema <= sizeLeccion) {
     $.ajax({
       type: "GET",
       url: `/tutor/${id_tema + 1}/tema`,

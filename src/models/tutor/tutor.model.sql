@@ -208,7 +208,7 @@ as $$
 	begin
 		return query
 		select et.id_estudiante, et.id_tema, t.id_leccion , et.estado, t.titulo from estudiante_tema et, tema t
-		where et.id_estudiante = 1 and et.id_tema = t.id_tema order by et.id_tema asc;
+		where et.id_estudiante = id_e and et.id_tema = t.id_tema order by et.id_tema asc;
 	end
 $$
 language plpgsql;
