@@ -31,6 +31,15 @@ module.exports = {
         where t.id_leccion = (select id_leccion from tema te where te.id_tema = $1); `,[id_tema]);
         return result.rows[0];
     },
+    getUltimoTema : async function(id_tema){
+        const result = await pool.query(`
+        SELECT id_tema, 
+        CASE WHEN id_tema = (SELECT MAX(id_tema) FROM tema where id_leccion =(select id_leccion from tema where id_tema = $1)) THEN true ELSE false END AS es_ultimo_id
+        FROM tema
+        WHERE id_tema = $1;
+        `, [id_tema]);
+        return result.rows[0];
+    },
     getTema: async function (id_tema) {
         const result = await pool.query(`
         select * from obtener_tema($1)`, [id_tema]);
@@ -64,10 +73,17 @@ module.exports = {
 
     //Funciones de ejercicio
     get_ejer_by_id : async function(id_ejer){
-        const result = await pool.query("select count(*) from pregunta p where p.id_ejercicio = $1"
-        ,[id_ejer])
+        let result = await pool.query("select count(*) from pregunta p where p.id_ejercicio = $1"
+        ,[id_ejer]);
+        const titulo = await pool.query(`
+            select titulo
+            from leccion
+            where id_leccion = $1
+        `,[id_ejer]);
+        result.rows[0].titulo = titulo.rows[0].titulo;
         //console.log(result.rows[0].count);
-        return result.rows[0].count;
+        //console.log(result.rows[0]);
+        return result.rows[0];
     },
     get_pregunta_from_leccion : async function(id_lec, num){
         let result = await pool.query(`select * from pregunta where id_ejercicio = $1`,[id_lec]);
@@ -89,14 +105,31 @@ module.exports = {
         puntaje = puntaje.toFixed(2)*100; //Se redondea a un numero alto, bono para estudiante :)
         const result = await pool.query(`
         select * from savePuntaje($1,$2,$3)`,[id_usr, parseInt(data.id_leccion), puntaje]);
-        console.log(result.rows[0]);
+        //console.log(result.rows[0]);
         return result.rows[0].savepuntaje;
     },
     //Modelo de Vista Evaluaciones
     get_puntaje : async function(id_usr){
-        const result = await pool.query(`
+        let result = await pool.query(`
         select * from getPuntajeDeLecciones($1)`,[id_usr]);
-        return result.rows;
+        result = result.rows;
+        let result_final = result;
+        let i = 0;
+        for (const item of result) {
+            let query = await pool.query(`
+                select t.id_tema, t.titulo, et.estado , et.puntaje , et.fec_puntaje 
+                from estudiante_tema et
+                inner join tema t
+                on et.id_tema = t.id_tema
+                where et.id_estudiante = (select e.id_estudiante from estudiante e where e.id_usuario = $1)
+                      and t.id_leccion = $2
+                order by et.id_tema 
+            `,[id_usr, item.id_leccion]);
+            result_final[i].puntaje_tema = query.rows;
+            i += 1;
+        }
+        //console.log(result_final);
+        return result_final;
     },
     //Modelo de Vista Avance
     get_avance : async function(id_usr){
@@ -180,6 +213,14 @@ module.exports = {
         const result = await pool.query(`
         SELECT * from ejercicio0 where id_ejercicio0 = $1`, [id_tema]);
         return result.rows[0];
+    },
+
+
+    setPuntajeEjercicio : async function(id_user, puntaje, id_tema){
+        const result = await pool.query(`
+        select * from guardar_puntaje_tema($1, $2, $3, $4)`,
+        [id_user, parseInt(id_tema), puntaje, (new Date())]);
+        return result;
     }
 }   
 //

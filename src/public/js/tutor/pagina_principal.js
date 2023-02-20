@@ -40,15 +40,11 @@ function listLecciones() {
                     </div>`;
           flag_tema_css = true;
         });
+        console.log(leccion);
         temp_leccion += `
                     <div class="col-lg-6 mb-5 border-bottom">
                       <div class="d-flex justify-content-between border-bottom border-dark">
                         <p><strong>${leccion.titulo}</strong></p>
-                        ${
-                          leccion.status === true
-                            ? '<a href="#"><span class="badge bg-success">Completado</span></a>'
-                            : '<a href="#"><span class="badge bg-dark">Sin completar</span></a>'
-                        }  
                       </div>
                       <div class="mt-5 mb-2">
                         ${temp_tema}
@@ -85,8 +81,10 @@ function getTema(id_tema) {
     type: "GET",
     url: `/tutor/${id_tema}/tema`,
     success: function (response) {
+      console.log(response);
       let tema = response.tema;
-      if (contarTema == tema.sizeLeccion) {
+      sessionStorage.setItem("titulo_tema", tema.titulo);
+      if (contarTema == tema.sizeLeccion || tema.es_ultimo == true) {
         $("#btn-tema-siguiente").attr("hidden", "");
         $("#btn-tema-evaluacion").removeAttr("hidden");
       }
@@ -110,29 +108,23 @@ function siguienteTema() {
   let id_tema = parseInt(sessionStorage.getItem("id_tema"));
   let sizeLeccion = parseInt(sessionStorage.getItem("sizeLeccion"));
   console.log("tam-leccion :"+sizeLeccion);
-  //Cambiamos el estado a tema completado
-  $.ajax({
-    type: "POST",
-    url: `/tutor/checkTema`,
-    data: { id_tema, status: true },
-    success: function (response) {},
-  });
-  if (contarTema == sizeLeccion) {
-    $("#btn-tema-siguiente").attr("hidden", "");
-    $("#btn-tema-evaluacion").removeAttr("hidden");
-  }
-  //Verificamos si el tema pertenece a la leccion
   if (contarTema <= sizeLeccion) {
     $.ajax({
       type: "GET",
       url: `/tutor/${id_tema + 1}/tema`,
       success: function (response) {
         let tema = response.tema;
+        sessionStorage.setItem("titulo_tema", tema.titulo);
         $("#titulo-tema").html(`<strong>${tema.titulo}</strong>`);
         if (response.tema.estilo == "VA") {
           $("#video").html(response.tema.path_video);
         } else if (response.tema.estilo == "VB") {
           $("#video").html(`${response.tema.contenido}`); //Arreglarrrrrr
+        }
+
+        if (contarTema == sizeLeccion || tema.es_ultimo == true) {
+          $("#btn-tema-siguiente").attr("hidden", "");
+          $("#btn-tema-evaluacion").removeAttr("hidden");
         }
         sessionStorage.removeItem("id_tema");
         sessionStorage.setItem("id_tema", response.tema.id_tema);
@@ -146,8 +138,9 @@ function getEjercicio(id_leccion) {
     type: "GET",
     url: `/tutor/${id_leccion}/ejercicio`,
     success: function (response) {
-      sessionStorage.setItem("total", response.size);
-      //console.log(response);
+      sessionStorage.setItem("total", response.count);
+      console.log(response);
+      $("#titulo_evaluacion").html(response.titulo);
       $("#contenido-evaluacion").html(`
         <div class="text-center">
           <h1>
@@ -166,7 +159,7 @@ function getEjercicio(id_leccion) {
                     <div class="frase">
                         <p>"Mantén la calma y confía en ti mismo"</p>
                     </div>
-                    <h4>Total de preguntas : <strong>${response.size}</strong></h4>
+                    <h4>Total de preguntas : <strong>${response.count}</strong></h4>
                     <button onclick="getP(${id_leccion})" class="btn btn-primary mt-3">Comenzar</button>
                 </div>
             </div>
@@ -235,14 +228,15 @@ async function getP(id_leccion) {
       url: "/tutor/sp",
       data: { size, c, id_leccion },
       success: function (response) {
-        //console.log(response);
+        console.log(response);
+        
         $("#contenido-evaluacion").html(`
           <div class="text-center bg-light pt-3" style="color: black;">
               <h1 class="mt-5"><strong>Felicidades completaste la Unidad!</strong></h1>
               <p>El éxito es la suma de pequeños esfuerzos repetidos día tras día.</p>
               <p class="mb-0 mt-5">Acertaste en</p>
               <h1 class="my-0"><strong>${c} de ${size}</strong></h1>
-              <p class="text-success"><strong>Nota : 65%</strong></p>
+              <h1 class="text-success"><strong>Nota : ${(c/size).toFixed(2)*100}</strong></h1>
               <br>
               <div id="quiz-pregunta"></div>              
               <div class="mt-5 pb-5 text-center">

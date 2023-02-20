@@ -29,10 +29,12 @@ module.exports = {
             const estilo = await obtenerEstilo(req.user.id_usuario);
             let result = await modelPaginaPrincipal.getTema(req.params.id);
             let size = await modelPaginaPrincipal.getSizeLeccion(req.params.id);
+            let ultimoTema = await modelPaginaPrincipal.getUltimoTema(req.params.id);
             //SI EXISTE EL ESTILO, PUEDO QUE AUN NO EXISTA SI ES POR PRIMERA VEZ
+            //console.log(ultimoTema);
             result.estilo = estilo.estilo;
             result.sizeLeccion = size.count;
-            //console.log(result);
+            result.es_ultimo = ultimoTema.es_ultimo_id;
             res.json({tema : result});
         }
     },
@@ -42,7 +44,7 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "EST"){
             const result = await modelPaginaPrincipal.get_ejer_by_id(req.params.id);
-            res.json({size: result});
+            res.json(result);
         }
     },
     getPregunta : async function(req, res){
@@ -95,7 +97,8 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "EST"){
             const result = await modelPaginaPrincipal.get_puntaje(req.user.id_usuario);
-            //console.log(result);
+            //const result1 = await modelPaginaPrincipal.get_puntaje_tema(req.user.id_usuario);
+            console.log(result);
             res.json(result);
         }
     },
@@ -120,5 +123,15 @@ module.exports = {
         console.log(req.params.id);
         const result = await modelPaginaPrincipal.obtenerEjercicioTema(req.params.id);
         res.json(result);
+    },
+    setPuntajeEjercicio : async (req, res)=>{
+        console.log(req.body.aciertos);
+        console.log(req.body.tamanio);
+        let puntaje = parseInt(req.body.aciertos)/parseInt(req.body.tamanio);
+        console.log(puntaje);
+        puntaje = puntaje.toFixed(2)*100;
+        console.log(puntaje);
+        const result = await modelPaginaPrincipal.setPuntajeEjercicio(req.user.id_usuario, puntaje, req.body.tema);
+        return result;
     }
 }

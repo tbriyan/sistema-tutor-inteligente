@@ -30,4 +30,5 @@ router.post("/style", isLoggedIn, controller.setStyle);
 
 //Ruta ejercicio0
 router.get("/:id/tema-ejercicios", isLoggedIn, controller.obtenerEjercicio);
+router.post("/puntaje-ejercicio", isLoggedIn, controller.setPuntajeEjercicio);
 module.exports = router;

@@ -164,7 +164,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" style="height: 100%">
-                                <strong>Estas en Modal Ejercicios</strong>
+                                <strong id="titulo_tema">Estas en Modal Ejercicios</strong>
                             </h5>
                             <a href="/" type="button" class="btn-close"></a>
                         </div>
@@ -185,7 +185,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" style="height: 100%">
-                                <strong>Estas en Modal Practicar</strong>
+                                <strong>Unidad -</strong>
+                                <strong id="titulo_evaluacion">Estas en Modal Evaluacion</strong>
                             </h5>
                             <a href="/" type="button" class="btn-close"></a>
                         </div>
@@ -242,6 +243,8 @@
                 let listaEjerTema;
                 function obtenerEjercicio(){
                     let id_tema = sessionStorage.getItem("id_tema");
+                    //console.log(sessionStorage.getItem("titulo_tema"));
+                    $("#titulo_tema").html(sessionStorage.getItem("titulo_tema"));
                     $.ajax({
                         type: "get",
                         url: `/tutor/${id_tema}/tema-ejercicios`,
@@ -254,16 +257,15 @@
                 }
                 let respuestas = [];
                 let total_aciertos = 0;
-                let count = 0;
                 function mostrarPregunta(index){
                     //console.log(listaEjerTema[index])
-                    console.log('TAMANIO'+listaEjerTema.length);
-                    console.log("index"+index);
-                    count += 1;
-                    if(index<listaEjerTema.length-1){
+                    //console.log('TAMANIO'+listaEjerTema.length);
+                    //onsole.log("index"+index);
+                    
+                    if(index<listaEjerTema.length){
                         switch (listaEjerTema[index].tipo) {
                             case "completar":
-                                console.log("completar")
+                                //console.log("completar")
                                 $("#contenido-ejercicio").html(`
                                 <div class="text-center mb-5">
                                     <h2><strong>${listaEjerTema[index].pregunta}</strong></h2>
@@ -321,7 +323,7 @@
                                 <div id="resultados-ejercicios">
 
                                 </div>
-                                <a href="/" class="btn btn-primary">Salir</a>
+                                <a href="#" onclick="guardar_puntaje()" class="btn btn-primary">Salir</a>
                             </div>
                         `);
                         let temp_pregunta = "";
@@ -356,7 +358,7 @@
                                                   </i></span>
                                                 </li>
                                                 `;
-                                                total_aciertos += 1;
+                                                //total_aciertos += 1;
                                             }else{
                                                 temp_opciones += `
                                                 <li class="list-group-item">${opc}<span style="float: right;">
@@ -389,6 +391,9 @@
 
                             }
                             if(ejercicio.tipo == "completar"){
+                                if(ejercicio.respuesta==respuestas[i]){
+                                    total_aciertos += 1;
+                                }
                                 temp_pregunta += `
                                   <div class="mb-5">
                                     <h3>${ejercicio.pregunta}</h3>
@@ -415,7 +420,7 @@
                             }
                         });
                         $("#resultados-ejercicios").html(temp_pregunta);
-                        console.log(count);
+                        console.log(total_aciertos);
                     }
                 }
                 function guardar_seleccionar(index){
@@ -428,13 +433,38 @@
                 function guardar_completar(index){
                     //console.log($('input:text[name=respuesta]').val());
                     let resp = $('input:text[name=respuesta]').val();
+                    //console.log(resp);
                     if(resp!=""){
                         respuestas.push(resp);
                         mostrarPregunta(index+1);
                     }
                 }
 
-                
+    function guardar_puntaje(){
+        console.log(respuestas.length);
+        console.log(total_aciertos);
+        $.ajax({
+            type: "POST",
+            url: "/tutor/puntaje-ejercicio",
+            data: 
+            {
+                tamanio : respuestas.length,
+                aciertos : total_aciertos,
+                tema : sessionStorage.getItem("id_tema")
+            },
+            success: function (response) {
+            }
+        });
+        $.ajax({
+              type: "POST",
+              url: `/tutor/checkTema`,
+              data: { id_tema : sessionStorage.getItem("id_tema"),
+                 status: true },
+              success: function (response) {},
+            });
+        //console.log(total_aciertos);
+        location.reload();
+    }
             </script>
 </body>
 

@@ -236,3 +236,20 @@ as $$
 	end
 $$
 language plpgsql;
+
+
+alter table estudiante_tema add column puntaje numeric;
+alter table estudiante_tema add column fec_puntaje date;
+
+create or replace function guardar_puntaje_tema(id_usr int, in_id_tema int, in_puntaje numeric, fecha_cre date)
+returns boolean
+as $$
+	declare
+		id_e numeric := (select est.id_estudiante from estudiante est where est.id_usuario = id_usr);
+	begin
+		update estudiante_tema set puntaje = in_puntaje, fec_puntaje = fecha_cre where id_estudiante = id_e and id_tema = in_id_tema;
+	return true;
+	end
+	
+$$
+language plpgsql;

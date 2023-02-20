@@ -249,7 +249,7 @@ function getS1(id_usuario) {
         type: "GET",
         url: `/course/${id_usuario}/get-est`,
         success: function (response) {
-            //console.log(response);
+            console.log(response);
             let temp_notas = "";
             let hoja = response.hoja_estilo;
             response.notas.forEach((nota, index) => {
@@ -496,6 +496,7 @@ function getS() {
         type: "GET",
         url: `/course/${id_curso}/list-r1-estudiantes`,
         success: function (response) {
+            console.log(response);
             let temp_estudiante = "";
             response.forEach((element, index) => {
                 let temp_nota = "";

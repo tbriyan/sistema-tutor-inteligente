@@ -119,7 +119,7 @@ module.exports = {
         });
         estudiante.rows[0].notas = notas.rows;
         let promedio = await pool.query(`
-        select (sum(ee.puntaje)::numeric/6::numeric)::decimal(4,2) promedio from estudiante_ejercicio ee, estudiante e 
+        select (sum(ee.puntaje)::numeric/2::numeric)::decimal(4,2) promedio from estudiante_ejercicio ee, estudiante e 
         where ee.id_estudiante = e.id_estudiante and e.id_usuario = $1`
         ,[id_usr_est]);
         estudiante.rows[0].promedio = promedio.rows[0].promedio;
