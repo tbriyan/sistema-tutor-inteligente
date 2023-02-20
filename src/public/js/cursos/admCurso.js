@@ -7,18 +7,18 @@ function getCursosByPrf() {
         type: "GET",
         url: "/course/list-r1-listCursos",
         success: function (response) {
-            //console.log(response);
             let temp_profesor = "";
             response.forEach(element => {
                 let temp_curso = "";
                 element.curso.forEach((curso, index) => {
+                    let nombre_curso = curso.grado+" "+curso.paralelo;
                     temp_curso += `
                     <tr>
                         <td class="text-center">${index+1}</td>
                         <td class="text-center text-capitalize">${curso.grado} ${curso.paralelo}</td>
                         <td class="text-center"><span class="badge ${curso.progreso>50?'bg-success':'bg-warning'}">${curso.progreso}%</span></td>
                         <td class="text-center">
-                            <a onclick="getS(${curso.id_curso})" class="text-primary" href="#" title="Puntaje General" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <a onclick="getS(${curso.id_curso}, '${nombre_curso}', '${element.nombre}')" class="text-primary" href="#" title="Puntaje General" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                               <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -39,7 +39,8 @@ function getCursosByPrf() {
                 });
 
                 temp_profesor += `
-                <div class="col-lg-6" ${element.curso.length>0?'':'hidden'}>
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6 mb-5" ${element.curso.length>0?'':'hidden'}>
                     <div class="card">
                         <div class="card-header">
                             <strong class="text-capitalize">Prof. ${element.nombre}</strong>
@@ -61,13 +62,54 @@ function getCursosByPrf() {
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3"></div>
             `;
             });
             $("#cursos").html(temp_profesor);
         }
     });
 }
-function getS(id_curso){
+function getS(id_curso, nombre_curso, nombre_profesor) {
+    $("#exampleModalLabel").html(nombre_profesor);
+    $("#quote_curso").html(nombre_curso);
+    $("#descargar_reporte").attr("hidden", "");
+    $("#generar_reporte").removeAttr("hidden");
+    //console.log(typeof (id_curso));
+    $.ajax({
+        type: "GET",
+        url: `/course/${id_curso}/list-r1-estudiantes`,
+        success: function (response) {
+            //console.log(response);
+            let temp_estudiante = "";
+            response.forEach((estudiante, index) => {
+                temp_nota_ejercicio = "";
+                estudiante.notas_ejercicio.forEach(nota => {
+                    temp_nota_ejercicio += `
+                        <td class="text-center">${nota.promedio?nota.promedio:0}</td>
+                    `;
+                });
+                temp_nota_evaluacion = "";
+                estudiante.notas_evaluacion.forEach(nota => {
+                    temp_nota_evaluacion += `
+                        <td class="text-center">${nota.puntaje?nota.puntaje:0}</td>
+                    `;
+                });
+                temp_estudiante += `
+                <tr>
+                    <td class="text-center">${index+1}</td>
+                    <td class="ps-3 text-capitalize">${estudiante.persona.nombre}</td>
+                    ${temp_nota_ejercicio}
+                    <td class="text-center">${estudiante.promedio_ejercicio?estudiante.promedio_ejercicio:0}</td>
+                    ${temp_nota_evaluacion}
+                    <td class="text-center">${estudiante.promedio_evaluacion?estudiante.promedio_evaluacion:0}</td>
+                </tr>
+                `;
+            });
+            $("#tabla_notas").html(temp_estudiante);
+        }
+    });
+}
+/*function getS(id_curso){
     $("#descargar_reporte").attr("hidden", "");
     $("#generar_reporte").removeAttr("hidden");
     sessionStorage.setItem("id_curso", id_curso);
@@ -101,11 +143,11 @@ function getS(id_curso){
             //$("#adm-report0").attr("href", "/docs/"+response.filepath);
         }
     });
-}
+}*/
 async function g_report0(){
     let id_curso = parseInt(sessionStorage.getItem("id_curso"));
-    console.log(id_curso);
-    console.log(typeof(id_curso));
+    //console.log(id_curso);
+    //console.log(typeof(id_curso));
     $("#generar_reporte").attr("hidden", "");
     $("#esperar_reporte").removeAttr("hidden");
     let result =  await $.ajax({
@@ -117,5 +159,5 @@ async function g_report0(){
         $("#descargar_reporte").removeAttr("hidden");
         $("#descargar_reporte").attr("href", "/docs/"+result);
     }
-    console.log(result);
+    //console.log(result);
 }

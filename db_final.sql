@@ -114,7 +114,12 @@ CREATE TABLE bc_tema(
     contenido text,
     primary key(id_tema)
 );
-
+create table ejercicio0(
+	id_ejercicio0 serial,
+	id_leccion int references leccion(id_leccion),
+	preguntas json,
+	primary key(id_ejercicio0)
+);
 --=========================ESTILO DE APRENDIZAJE TABLA DE PERFIL
 create table hoja_estilo(
 	id_hestilo serial,

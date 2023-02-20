@@ -44,6 +44,7 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "EST"){
             const result = await modelPaginaPrincipal.get_ejer_by_id(req.params.id);
+            console.log(result);
             res.json(result);
         }
     },
@@ -98,7 +99,7 @@ module.exports = {
         if(rol == "EST"){
             const result = await modelPaginaPrincipal.get_puntaje(req.user.id_usuario);
             //const result1 = await modelPaginaPrincipal.get_puntaje_tema(req.user.id_usuario);
-            console.log(result);
+            //console.log(result);
             res.json(result);
         }
     },
@@ -120,17 +121,17 @@ module.exports = {
 
     //Controladores de ejercicio0
     obtenerEjercicio : async function(req, res){
-        console.log(req.params.id);
+        //console.log(req.params.id);
         const result = await modelPaginaPrincipal.obtenerEjercicioTema(req.params.id);
         res.json(result);
     },
     setPuntajeEjercicio : async (req, res)=>{
-        console.log(req.body.aciertos);
-        console.log(req.body.tamanio);
+        //console.log(req.body.aciertos);
+        //console.log(req.body.tamanio);
         let puntaje = parseInt(req.body.aciertos)/parseInt(req.body.tamanio);
-        console.log(puntaje);
+        //console.log(puntaje);
         puntaje = puntaje.toFixed(2)*100;
-        console.log(puntaje);
+        //console.log(puntaje);
         const result = await modelPaginaPrincipal.setPuntajeEjercicio(req.user.id_usuario, puntaje, req.body.tema);
         return result;
     }

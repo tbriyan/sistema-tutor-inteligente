@@ -12,38 +12,16 @@ passport.use("login", new LocalStrategy({
     const result = await pool.query(`
         SELECT * FROM usuario WHERE username = $1
     `,[username]);
-
-    /*if(result.rows[0].id_rol == 2){
-        console.log("Eeres un proefesor");
-        let query = await pool.query(`
-        SELECT disabled FROM profesor WHERE id_usuario = $1`,[user.id_usuario]);
-        query = query.rows[0].disabled;
-        if(!query){ // query = true => esta desabilitado eoc
-            if(result.rows.length>0){
-                let user = result.rows[0];
-                const passwordIsValid = await loginHelper.compararPassword(password, user.pass);
-                if(!passwordIsValid){
-                    return done(null, false, req.flash("success", "Contraseña incorrecta!"));
-                }
-                done(null, user); //raiz
-        
-            }else{
-                return done(null, false, req.flash("fail", "Usuario no encontrado!"));
-            }
-        }
-    }*/
-    //Si el id rol es 3 lo mismo
-
     if(result.rows.length>0){
         let user = result.rows[0];
         const passwordIsValid = await loginHelper.compararPassword(password, user.pass);
         if(!passwordIsValid){
-            return done(null, false, req.flash("success", "Contraseña incorrecta!"));
+            return done(null, false, req.flash("message", "Contraseña incorrecta!"));
         }
         done(null, user); //raiz
 
     }else{
-        return done(null, false, req.flash("fail", "Usuario no encontrado!"));
+        return done(null, false, req.flash("message", "Usuario no encontrado!"));
     }
 }));
 

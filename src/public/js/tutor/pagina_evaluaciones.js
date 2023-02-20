@@ -6,7 +6,7 @@ $(()=>{
       type: "GET",
       url: "/tutor/puntaje",
       success: function (response) {
-        console.log(response);
+        //console.log(response);
         let temp_puntaje = "";
         response.forEach((element, index) => {
           temp_puntaje += `

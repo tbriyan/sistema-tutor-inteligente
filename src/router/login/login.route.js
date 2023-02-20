@@ -8,8 +8,8 @@ const { getSelf } = require("../../models/usuarios/usuarios.model");
 const { get_learning_style } = require("../../models/tutor/Model_pagina_principal");
 //Rutas
 router.get("/login", isNotLoggedIn, (req, res)=>{
-    let message = req.flash("fail");
-    res.render("index");
+    let message = req.flash("message")[0];
+    res.render("index", {message});
 });
 router.post("/login", isNotLoggedIn, (req, res, next)=>{
     passport.authenticate("login", {

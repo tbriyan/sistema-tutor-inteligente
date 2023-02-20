@@ -28,8 +28,8 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Prof. Juan Perez Mendoza</h1>
-                        <span class="badge bg-success ms-3">Sexto c</span>
+                        <h1 class="modal-title fs-5 text-capitalize">Prof. <span id="exampleModalLabel">juanito</span></h1>
+                        <span class="badge bg-success ms-3 text-capitalize" id="quote_curso">Sexto c</span>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -67,22 +67,26 @@
                                 </a>
                             </div>
                         </div>
-                        <table class="table mt-5">
-                            <thead class="table-primary">
+                        <table class="table table-bordered mt-5">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <th colspan="3" class="text-center bg-primary text-light">EJERCICIOS</th>
+                                    <th colspan="3" class="text-center bg-success text-light">EVALUACION</th>
+                                </tr>
                                 <tr>
                                     <th class="text-center">N°</th>
-                                    <th class="text-start">Nombre</th>
-                                    <th class="text-center">Genero</th>
-                                    <th class="text-center">PL1</th>
-                                    <th class="text-center">PL2</th>
-                                    <th class="text-center">PL3</th>
-                                    <th class="text-center">PL4</th>
-                                    <th class="text-center">PL5</th>
-                                    <th class="text-center">PL6</th>
-                                    <th class="text-center">Promedio</th>
+                                    <th class="ps-3">NOMBRE</th>
+                                    <td class="text-center fw-bold">PE1</td>
+                                    <td class="text-center fw-bold">PE2</td>
+                                    <td class="text-center fw-bold">PRO</td>
+                                    <td class="text-center fw-bold">PE1</td>
+                                    <td class="text-center fw-bold">PE2</td>
+                                    <td class="text-center fw-bold">PRO</td>
                                 </tr>
                             </thead>
-                            <tbody id="table-modal-body">
+                            <tbody id="tabla_notas">
                             </tbody>
                         </table>
                     </div>

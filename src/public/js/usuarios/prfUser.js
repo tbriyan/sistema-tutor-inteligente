@@ -249,7 +249,7 @@ function getS1(id_usuario) {
         type: "GET",
         url: `/course/${id_usuario}/get-est`,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             let temp_notas = "";
             let hoja = response.hoja_estilo;
             response.notas.forEach((nota, index) => {
@@ -487,7 +487,7 @@ function getS1(id_usuario) {
             }
     });
 }
-function getS() {
+/*function getS() {
     $("#descargar_reporte").attr("hidden", "");
     $("#generar_reporte").removeAttr("hidden");
     let id_curso = parseInt(sessionStorage.getItem("curso"));
@@ -521,7 +521,7 @@ function getS() {
             $("#table-modal-body").html(temp_estudiante);
         }
     });
-}
+}*/
 
 
 //==============================================others

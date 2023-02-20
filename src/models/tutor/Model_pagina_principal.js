@@ -75,6 +75,8 @@ module.exports = {
     get_ejer_by_id : async function(id_ejer){
         let result = await pool.query("select count(*) from pregunta p where p.id_ejercicio = $1"
         ,[id_ejer]);
+        //harcodeadoooo
+        result.rows[0].count = '15';
         const titulo = await pool.query(`
             select titulo
             from leccion
@@ -86,8 +88,13 @@ module.exports = {
         return result.rows[0];
     },
     get_pregunta_from_leccion : async function(id_lec, num){
-        let result = await pool.query(`select * from pregunta where id_ejercicio = $1`,[id_lec]);
-        delete result.rows[num].pregunta.respuesta;
+        let result = await pool.query(`
+            select *
+            from pregunta
+            where id_ejercicio = $1
+            order by random() limit 15
+        `,[id_lec]);
+        //delete result.rows[num].pregunta.respuesta;
         return result.rows[num];
     },
     get_bool_respuesta : async function(data){

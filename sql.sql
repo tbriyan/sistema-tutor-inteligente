@@ -1,10 +1,3 @@
-create table ejercicio0(
-	id_ejercicio0 serial,
-	id_leccion int references leccion(id_leccion),
-	preguntas json,
-	primary key(id_ejercicio0)
-);
-
 --PARA EL TEMA 1
 insert into ejercicio0 values(1, 1, '{
 	"lista" : [

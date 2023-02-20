@@ -1,6 +1,7 @@
 const path = require("path");
 module.exports = {
     options : {
+        //phantomPath: path.join(__dirname, '../../node_modules/phantomjs-prebuilt/bin/phantomjs'),
         format: "Letter",
         orientation: "portrait",
         border: "10mm",

@@ -20,3 +20,8 @@ body{
 .respirar:hover{
     transform: scale(1.1);
 }
+@media (max-width: 768px) {
+    #tutor_image{
+        display: none !important;
+    }
+}

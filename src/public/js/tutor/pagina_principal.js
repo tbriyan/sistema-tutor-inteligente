@@ -40,7 +40,7 @@ function listLecciones() {
                     </div>`;
           flag_tema_css = true;
         });
-        console.log(leccion);
+        //console.log(leccion);
         temp_leccion += `
                     <div class="col-lg-6 mb-5 border-bottom">
                       <div class="d-flex justify-content-between border-bottom border-dark">
@@ -76,19 +76,19 @@ function listLecciones() {
 let contarTema = 0;
 function getTema(id_tema) {
   contarTema += 1;
-  console.log("cont : "+contarTema);
+  //console.log("cont : "+contarTema);
   $.ajax({
     type: "GET",
     url: `/tutor/${id_tema}/tema`,
     success: function (response) {
-      console.log(response);
+      //console.log(response);
       let tema = response.tema;
       sessionStorage.setItem("titulo_tema", tema.titulo);
       if (contarTema == tema.sizeLeccion || tema.es_ultimo == true) {
         $("#btn-tema-siguiente").attr("hidden", "");
         $("#btn-tema-evaluacion").removeAttr("hidden");
       }
-      console.log(response);
+      //console.log(response);
       $("#titulo-tema").html(`<strong>${tema.titulo}</strong>`);
       if (response.tema.estilo == "VA") {
         $("#video").html(response.tema.path_video);
@@ -96,7 +96,7 @@ function getTema(id_tema) {
         $("#video").html(`${response.tema.contenido}`); //Arreglarrrrrr
       }
       sessionStorage.setItem("sizeLeccion", tema.sizeLeccion);
-      console.log("tam-leccion :"+tema.sizeLeccion);
+      //console.log("tam-leccion :"+tema.sizeLeccion);
       sessionStorage.setItem("id_tema", tema.id_tema);
       sessionStorage.setItem("id_leccion", tema.id_leccion);
     },
@@ -104,10 +104,10 @@ function getTema(id_tema) {
 }
 function siguienteTema() {
   contarTema += 1;
-  console.log("cont : "+contarTema);
+  //console.log("cont : "+contarTema);
   let id_tema = parseInt(sessionStorage.getItem("id_tema"));
   let sizeLeccion = parseInt(sessionStorage.getItem("sizeLeccion"));
-  console.log("tam-leccion :"+sizeLeccion);
+  //console.log("tam-leccion :"+sizeLeccion);
   if (contarTema <= sizeLeccion) {
     $.ajax({
       type: "GET",
@@ -228,7 +228,7 @@ async function getP(id_leccion) {
       url: "/tutor/sp",
       data: { size, c, id_leccion },
       success: function (response) {
-        console.log(response);
+        //console.log(response);
         
         $("#contenido-evaluacion").html(`
           <div class="text-center bg-light pt-3" style="color: black;">

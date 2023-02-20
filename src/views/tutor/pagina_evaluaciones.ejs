@@ -49,12 +49,10 @@
     get_puntaje_gral();
   });
   function get_puntaje_gral(){
-    console.log("####");
     $.ajax({
       type: "GET",
       url: "/tutor/puntaje",
       success: function (response) {
-        console.log(response);
         let temp_leccion = "";
         response.forEach(leccion => {
             let promedio_temas = 0;
@@ -75,7 +73,6 @@
             });
             promedio_temas = promedio_temas/leccion.puntaje_tema.length;
             promedio_temas = promedio_temas.toFixed(2);
-            console.log(promedio_temas);
             //promedio_temas = promedio_temas/leccion.puntaje_tema.lenght;
             //console.log(promedio_temas);
             //console.log(leccion.puntaje_tema.lenght);

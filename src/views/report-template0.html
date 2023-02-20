@@ -7,46 +7,57 @@
     <title>Template report0</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
 </head>
 <body>
     <h3 class="text-center"><strong>Lista General por Curso</strong></h3>
     <p class="text-center">A continuación se presenta la lista general de estudiantes y los puntajes obtenidos en cada Leccion</p>
     <br>
     <table class="table table-bordered">
-        <thead style="background-color: rgb(66, 66, 66);color:white;">
-          <tr>
-            <th scope="col" class="text-center">N°</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Sexo</th>
-            <th scope="col">PL1</th>
-            <th scope="col">PL2</th>
-            <th scope="col">PL3</th>
-            <th scope="col">PL4</th>
-            <th scope="col">PL5</th>
-            <th scope="col">PL6</th>
-            <th scope="col" class="text-center">Promedio</th>
-          </tr>
-        </thead>
+      <thead>
+        <tr>
+            <td></td>
+            <td></td>
+            <th colspan="3" class="text-center" style="background-color: #158CBA;color: white;"><strong>EJERCICIOS</strong></th>
+            <th colspan="3" class="text-center" style="background-color: #28B62C;color: white;"><strong>EVALUACION</strong></th>
+        </tr>
+        <tr>
+            <th class="text-center">N°</th>
+            <th class="ps-3">NOMBRE</th>
+            <td class="text-center fw-bold">PEJ-L1</td>
+            <td class="text-center fw-bold">PEJ-L2</td>
+            <td class="text-center fw-bold" style="background-color: #158CBA;color: white;">PRO</td>
+            <td class="text-center fw-bold">PEV-L1</td>
+            <td class="text-center fw-bold">PEV-L2</td>
+            <td class="text-center fw-bold" style="background-color: #28B62C;color: white;">PRO</td>
+        </tr>
+    </thead>
         <tbody>
           {{#each result}}
           <tr>
             <th scope="row" class="text-center">{{@key}}</th>
-            <td>{{this.persona.nombre}}</td>
-            {{#ifCond this.persona.sexo '==' 'F'}}
-              <td>Femenino</td>
-            {{/ifCond}}
-            {{#ifCond this.persona.sexo '==' 'M'}}
-              <td>Masculino</td>
-            {{/ifCond}}
-            {{#each this.notas}}
-              {{#ifCond this.puntaje "!=" null}}
-                <td>{{this.puntaje}}</td>
+            <td class="text-capitalize">{{this.persona.nombre}}</td>
+            {{#each this.notas_ejercicio}}
+              {{#ifCond this.promedio "!=" null}}
+                <td class="text-center">{{this.promedio}}</td>
               {{else}}
-                <td>0</td>
+                <td class="text-center">0</td>
               {{/ifCond}}
             {{/each}}
-            {{#ifCond this.promedio "!=" null}}
-              <td class="text-center">{{this.promedio}}</td>
+            {{#ifCond this.promedio_ejercicio "!=" null}}
+              <td class="text-center">{{this.promedio_ejercicio}}</td>
+            {{else}}
+              <td class="text-center">0</td>
+            {{/ifCond}}
+            {{#each this.notas_evaluacion}}
+              {{#ifCond this.puntaje "!=" null}}
+                <td class="text-center">{{this.puntaje}}</td>
+              {{else}}
+                <td class="text-center">0</td>
+              {{/ifCond}}
+            {{/each}}
+            {{#ifCond this.promedio_evaluacion "!=" null}}
+              <td class="text-center">{{this.promedio_evaluacion}}</td>
             {{else}}
               <td class="text-center">0</td>
             {{/ifCond}}

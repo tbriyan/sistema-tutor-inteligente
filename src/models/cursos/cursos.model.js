@@ -32,7 +32,7 @@ module.exports = {
         return result.rows[0];
     },
     deleteCourseById : async function(id_usr, id_curso){
-        console.log(id_usr+" "+id_curso);
+        //console.log(id_usr+" "+id_curso);
         const result = await pool.query(`
         select * from deleteCourse($1, $2);`
         ,[id_usr, id_curso]);
@@ -58,7 +58,7 @@ module.exports = {
                 let progreso =  await pool.query(`
                 select (sum(t.promedio)::numeric/count(*)::numeric)::decimal(4,2) total
                     from (
-                    	select ee.id_estudiante, (sum(ee.puntaje)::numeric/6::numeric) promedio 
+                    	select ee.id_estudiante, (sum(ee.puntaje)::numeric/2::numeric) promedio 
                     	from estudiante_ejercicio ee, estudiante e where e.id_estudiante = ee.id_estudiante and e.disabled = false and e.id_curso = $1 
                     	group by ee.id_estudiante 
                     ) t`
@@ -73,28 +73,51 @@ module.exports = {
         return profList.rows;
     },
     get_est_by_curso : async function(id_usr_adm, id_curso){
-        console.log("ENTREEEEEEE");
+        //console.log("ENTREEEEEEE");
         let listEst = await pool.query(`
         select e.id_estudiante, e.id_usuario from estudiante e 
         where e.id_curso = $1 and e.disabled = false order by e.id_estudiante asc`
         ,[id_curso]);
-        console.log(listEst.rows);
+        //console.log(listEst.rows);
         for (const estudiante of listEst.rows) {
-            let notas = await pool.query(`
+            let notasEvaluacion = await pool.query(`
             select ee.id_ejercicio, ee.puntaje  
                 from estudiante_ejercicio ee where ee.id_estudiante = $1 order by ee.id_ejercicio asc`
             ,[estudiante.id_estudiante]);
-            estudiante.notas = notas.rows;
-            let promedio = await pool.query(`
-            select (sum(ee.puntaje)::numeric/6::numeric)::decimal(4,2) promedio  from estudiante_ejercicio ee where ee.id_estudiante = $1`
+            estudiante.notas_evaluacion = notasEvaluacion.rows;
+            let promedio_evaluacion = await pool.query(`
+            select (sum(ee.puntaje)::numeric/2::numeric)::decimal(4,2) promedio  from estudiante_ejercicio ee where ee.id_estudiante = $1`
             ,[estudiante.id_estudiante]);
-            estudiante.promedio = promedio.rows[0].promedio;
+            estudiante.promedio_evaluacion = parseInt(promedio_evaluacion.rows[0].promedio);
+            let notasEjercicios = await pool.query(`
+            select cast(round(
+                SUM(et.puntaje)/(select count(*) 
+                from tema tt 
+                where tt.id_leccion = t.id_leccion)
+                ) as integer) as promedio
+            from estudiante_tema et, tema t
+            where et.id_estudiante = $1 and et.id_tema = t.id_tema
+            group by t.id_leccion
+            order by t.id_leccion asc
+            `,[estudiante.id_estudiante]);
+            notasEjercicios = notasEjercicios.rows;
+            estudiante.notas_ejercicio = notasEjercicios;
+            let promedio_ej_aux = 0;
+            notasEjercicios.forEach(nota => {
+                if(nota.promedio != null){
+                    promedio_ej_aux += nota.promedio;
+                    //console.log(promedio_ej_aux);
+                }
+            });
+            promedio_ej_aux = promedio_ej_aux/notasEjercicios.length;
+            //console.log(promedio_ej_aux);
+            estudiante.promedio_ejercicio = promedio_ej_aux;
             let nombre = await pool.query(`
             select p.nombre||' '||p.apellido1||' '||p.apellido2 nombre, p.sexo from persona p, usuario u where u.id_persona = p.id_persona and u.id_usuario = $1`
             ,[estudiante.id_usuario]);
             estudiante.persona = nombre.rows[0];
         }
-        console.log(listEst.rows);
+        //console.log(listEst.rows);
         return listEst.rows;
     },
     get_point_est_by_id : async function(is_usr, id_usr_est){
