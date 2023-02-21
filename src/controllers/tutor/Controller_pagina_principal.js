@@ -31,7 +31,6 @@ module.exports = {
             let size = await modelPaginaPrincipal.getSizeLeccion(req.params.id);
             let ultimoTema = await modelPaginaPrincipal.getUltimoTema(req.params.id);
             //SI EXISTE EL ESTILO, PUEDO QUE AUN NO EXISTA SI ES POR PRIMERA VEZ
-            //console.log(ultimoTema);
             result.estilo = estilo.estilo;
             result.sizeLeccion = size.count;
             result.es_ultimo = ultimoTema.es_ultimo_id;
@@ -44,7 +43,6 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "EST"){
             const result = await modelPaginaPrincipal.get_ejer_by_id(req.params.id);
-            console.log(result);
             res.json(result);
         }
     },
@@ -66,7 +64,6 @@ module.exports = {
     savePuntaje : async function(req, res){
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "EST"){
-            //console.log(req.body);
             const result = await modelPaginaPrincipal.save_points(req.user.id_usuario, req.body);
             res.json(result);
         }
@@ -84,7 +81,8 @@ module.exports = {
     },
     get_view_maestro : async function(req, res){
         const user = await getSelf(req.user.id_usuario);
-        res.render("tutor/pagina_maestro", {user})
+        const maestro = await modelPaginaPrincipal.getMaestro(req.user.id_usuario);
+        res.render("tutor/pagina_maestro", {user, maestro})
     },
     get_view_practica : async function(req, res){
         const rol = await obtenerRol(req.user.id_usuario);
@@ -98,8 +96,6 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "EST"){
             const result = await modelPaginaPrincipal.get_puntaje(req.user.id_usuario);
-            //const result1 = await modelPaginaPrincipal.get_puntaje_tema(req.user.id_usuario);
-            //console.log(result);
             res.json(result);
         }
     },
@@ -121,17 +117,12 @@ module.exports = {
 
     //Controladores de ejercicio0
     obtenerEjercicio : async function(req, res){
-        //console.log(req.params.id);
         const result = await modelPaginaPrincipal.obtenerEjercicioTema(req.params.id);
         res.json(result);
     },
     setPuntajeEjercicio : async (req, res)=>{
-        //console.log(req.body.aciertos);
-        //console.log(req.body.tamanio);
         let puntaje = parseInt(req.body.aciertos)/parseInt(req.body.tamanio);
-        //console.log(puntaje);
         puntaje = puntaje.toFixed(2)*100;
-        //console.log(puntaje);
         const result = await modelPaginaPrincipal.setPuntajeEjercicio(req.user.id_usuario, puntaje, req.body.tema);
         return result;
     }

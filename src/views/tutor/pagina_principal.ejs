@@ -243,7 +243,6 @@
                 let listaEjerTema;
                 function obtenerEjercicio(){
                     let id_tema = sessionStorage.getItem("id_tema");
-                    //console.log(sessionStorage.getItem("titulo_tema"));
                     $("#titulo_tema").html(sessionStorage.getItem("titulo_tema"));
                     $.ajax({
                         type: "get",
@@ -257,14 +256,10 @@
                 let respuestas = [];
                 let total_aciertos = 0;
                 function mostrarPregunta(index){
-                    //console.log(listaEjerTema[index])
-                    //console.log('TAMANIO'+listaEjerTema.length);
-                    //onsole.log("index"+index);
                     
                     if(index<listaEjerTema.length){
                         switch (listaEjerTema[index].tipo) {
                             case "completar":
-                                //console.log("completar")
                                 $("#contenido-ejercicio").html(`
                                 <div class="text-center mb-5">
                                     <h2><strong>${listaEjerTema[index].pregunta}</strong></h2>
@@ -279,12 +274,11 @@
                                 `);
                                 break;
                             case "seleccionar":
-                                //console.log("seleccionar")
                                 let temp_preguntas = "";
                                 listaEjerTema[index].opciones.forEach((opcion, i) => {
                                     temp_preguntas += `
                                         <div class="seleccionar mt-3">
-                                            <input class="form-check-input" type="radio" name="respuesta" id="opc${i}" value="${opcion}" hidden>
+                                            <input class="form-check-input ischeked" type="radio" name="respuesta" id="opc${i}" value="${opcion}" hidden>
                                             <label class="form-check-label text-capitalize" for="opc${i}">
                                               ${opcion}
                                             </label>
@@ -329,7 +323,6 @@
                     
                         listaEjerTema.forEach((ejercicio, i) => {
                             let temp_opciones = "";
-                            //console.log(ejercicio);
                             if(ejercicio.tipo == "seleccionar"){
                                 //let flag = false;
                                 ejercicio.opciones.forEach(opc => {
@@ -422,16 +415,22 @@
                     }
                 }
                 function guardar_seleccionar(index){
-                    //console.log($('input:radio[name=respuesta]:checked').val());
-                    let resp = $('input:radio[name=respuesta]:checked').val();
-                    //console.log(resp);
-                    respuestas.push(resp);
-                    mostrarPregunta(index+1);
+                    const radios = document.querySelectorAll(".ischeked");
+                    let flag = false;
+                    for (let i = 0; i < radios.length; i++) {
+                        if(radios[i].checked){
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(flag){
+                        let resp = $('input:radio[name=respuesta]:checked').val();
+                        respuestas.push(resp);
+                        mostrarPregunta(index+1);
+                    }
                 }
                 function guardar_completar(index){
-                    //console.log($('input:text[name=respuesta]').val());
                     let resp = $('input:text[name=respuesta]').val();
-                    //console.log(resp);
                     if(resp!=""){
                         respuestas.push(resp);
                         mostrarPregunta(index+1);
@@ -458,7 +457,6 @@
                  status: true },
               success: function (response) {},
             });
-        //console.log(total_aciertos);
         location.reload();
     }
             </script>

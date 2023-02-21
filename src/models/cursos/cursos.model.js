@@ -10,7 +10,6 @@ module.exports = {
             select count(*) from estudiante e where e.id_curso = $1 and e.disabled = false`,[curso.id_curso]);
             curso.total = cant_estudiantes.rows[0].count;
         }
-        //console.log(result.rows);
         return result.rows;
     },
     saveCourse : async function(id_usr_prf, data){
@@ -32,7 +31,6 @@ module.exports = {
         return result.rows[0];
     },
     deleteCourseById : async function(id_usr, id_curso){
-        //console.log(id_usr+" "+id_curso);
         const result = await pool.query(`
         select * from deleteCourse($1, $2);`
         ,[id_usr, id_curso]);
@@ -73,12 +71,10 @@ module.exports = {
         return profList.rows;
     },
     get_est_by_curso : async function(id_usr_adm, id_curso){
-        //console.log("ENTREEEEEEE");
         let listEst = await pool.query(`
         select e.id_estudiante, e.id_usuario from estudiante e 
         where e.id_curso = $1 and e.disabled = false order by e.id_estudiante asc`
         ,[id_curso]);
-        //console.log(listEst.rows);
         for (const estudiante of listEst.rows) {
             let notasEvaluacion = await pool.query(`
             select ee.id_ejercicio, ee.puntaje  
@@ -106,18 +102,15 @@ module.exports = {
             notasEjercicios.forEach(nota => {
                 if(nota.promedio != null){
                     promedio_ej_aux += nota.promedio;
-                    //console.log(promedio_ej_aux);
                 }
             });
             promedio_ej_aux = promedio_ej_aux/notasEjercicios.length;
-            //console.log(promedio_ej_aux);
             estudiante.promedio_ejercicio = promedio_ej_aux;
             let nombre = await pool.query(`
             select p.nombre||' '||p.apellido1||' '||p.apellido2 nombre, p.sexo from persona p, usuario u where u.id_persona = p.id_persona and u.id_usuario = $1`
             ,[estudiante.id_usuario]);
             estudiante.persona = nombre.rows[0];
         }
-        //console.log(listEst.rows);
         return listEst.rows;
     },
     get_point_est_by_id : async function(is_usr, id_usr_est){
@@ -128,7 +121,6 @@ module.exports = {
         ,[id_usr_est]);
         let foto = await pool.query(`
         select path_foto from usuario where id_usuario = $1`,[id_usr_est]);
-        //console.log(foto.rows);
         estudiante.rows[0].path_foto = foto.rows[0].path_foto;
         let notas = await pool.query(`
         select ee.id_ejercicio, ee.puntaje, ee.fecha from estudiante_ejercicio ee, estudiante e 
@@ -150,8 +142,6 @@ module.exports = {
         select ar, si, vv, sg from hoja_estilo 
         where id_estudiante = (select id_estudiante from estudiante where id_usuario = $1)`,[id_usr_est]);
         estudiante.rows[0].hoja_estilo = hoja_estilo.rows[0];
-        //console.log(hoja_estilo.rows);
-        //console.log(estudiante.rows[0]);
         return estudiante.rows[0];
     }
 }

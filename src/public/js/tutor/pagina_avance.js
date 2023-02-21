@@ -6,7 +6,6 @@ function get_avance(){
         type: "GET",
         url: "/tutor/avance-general",
         success: function (response) {
-            //console.log(response);
             let temp_leccion = "";
             response.lecciones.forEach(leccion => {
                 let temp_tema = "";

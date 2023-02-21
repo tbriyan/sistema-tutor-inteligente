@@ -199,7 +199,6 @@ function deleteUser(id) {
                 success: function (response) {
                     alertify.success(response);
                     listUsers(sessionStorage.getItem("index"));
-                    //console.log(sessionStorage.getItem("indexPage"));
                 }
             })
         },

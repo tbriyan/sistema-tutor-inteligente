@@ -30,7 +30,6 @@ function listUsers(page) {
         type: "get",
         url: `/user/list?curso=${id_curso}&page=${page}`,
         success: function (response) {
-            //console.log(response);
             let usuarios = response.usuarios;
             let index = response.page;
             sessionStorage.setItem("index", index?index:1);
@@ -128,7 +127,6 @@ function saveUser() {
         success: function (response) {
             if (response.success) alertify.success(response.success);
             listUsers(sessionStorage.getItem("index"));
-            //console.log(response.success);
         }
     });
 }
@@ -180,7 +178,6 @@ $("#buscar").keyup(function (e) {
             data: { args : $("#buscar").val(),
                     curso :  id_usuario},
             success: function (response) {
-                //console.log(response);
                 let template = "";let i = 1
                     response.forEach(user => {
                         template += `
@@ -222,7 +219,6 @@ function deleteUser(id){
                 success: function (response) {
                     alertify.success(response);
                     listUsers(sessionStorage.getItem("index"));
-                    //console.log(sessionStorage.getItem("indexPage"));
                 }
             })
         },
@@ -236,7 +232,6 @@ function getCourse(id){
         type: "get",
         url: `/course/${id}/get`,
         success: function (response) {
-            //console.log(response);
             $("#titulo-curso").html(`
             <span class="ms-1 text-center badge bg-success">${response.grado} ${response.paralelo}</span>`);
         }
@@ -249,7 +244,6 @@ function getS1(id_usuario) {
         type: "GET",
         url: `/course/${id_usuario}/get-est`,
         success: function (response) {
-            //console.log(response);
             let temp_notas = "";
             let hoja = response.hoja_estilo;
             response.notas.forEach((nota, index) => {
@@ -487,43 +481,6 @@ function getS1(id_usuario) {
             }
     });
 }
-/*function getS() {
-    $("#descargar_reporte").attr("hidden", "");
-    $("#generar_reporte").removeAttr("hidden");
-    let id_curso = parseInt(sessionStorage.getItem("curso"));
-    //console.log(typeof (id_curso));
-    $.ajax({
-        type: "GET",
-        url: `/course/${id_curso}/list-r1-estudiantes`,
-        success: function (response) {
-            console.log(response);
-            let temp_estudiante = "";
-            response.forEach((element, index) => {
-                let temp_nota = "";
-                element.notas.forEach(nota => {
-                    temp_nota += `
-                    <td class="text-center">${nota.puntaje ? nota.puntaje : 0}</td>`;
-                });
-                temp_estudiante += `
-                    <tr>
-                        <td class="text-center"><strong>${index + 1}</strong></td>
-                        <td class="text-start text-capitalize">${element.persona.nombre}</td>
-                        <td class="text-center">
-                            <strong>${element.persona.sexo}</strong>
-                        </td>
-                        ${temp_nota}
-                        <td class="text-center ${element.promedio > 50 ? 'text-success' : 'text-danger'}">
-                            <strong>${element.promedio ? element.promedio : 0}</strong>
-                        </td>
-                    </tr>
-                `;
-            });
-            $("#table-modal-body").html(temp_estudiante);
-        }
-    });
-}*/
-
-
 //==============================================others
 function listUsersByFilter(page, id_curso) {
     sessionStorage.setItem("curso", id_curso);

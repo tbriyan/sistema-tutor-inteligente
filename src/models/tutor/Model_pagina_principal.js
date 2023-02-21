@@ -83,8 +83,6 @@ module.exports = {
             where id_leccion = $1
         `,[id_ejer]);
         result.rows[0].titulo = titulo.rows[0].titulo;
-        //console.log(result.rows[0].count);
-        //console.log(result.rows[0]);
         return result.rows[0];
     },
     get_pregunta_from_leccion : async function(id_lec, num){
@@ -100,7 +98,6 @@ module.exports = {
     get_bool_respuesta : async function(data){
         const result = await pool.query(`
         select p.pregunta from pregunta p where p.id_pregunta = $1 and p.id_ejercicio = $2`,[data.id_preg, data.leccion]);
-        //console.log(result.rows[0]);
         if(result.rows[0].pregunta.respuesta == data.opc){
             return {obj:result.rows[0].pregunta, state : true};
         }else{
@@ -112,7 +109,6 @@ module.exports = {
         puntaje = puntaje.toFixed(2)*100; //Se redondea a un numero alto, bono para estudiante :)
         const result = await pool.query(`
         select * from savePuntaje($1,$2,$3)`,[id_usr, parseInt(data.id_leccion), puntaje]);
-        //console.log(result.rows[0]);
         return result.rows[0].savepuntaje;
     },
     //Modelo de Vista Evaluaciones
@@ -135,7 +131,6 @@ module.exports = {
             result_final[i].puntaje_tema = query.rows;
             i += 1;
         }
-        //console.log(result_final);
         return result_final;
     },
     //Modelo de Vista Avance
@@ -145,8 +140,6 @@ module.exports = {
         `,[id_usr]);
         const lecciones = await pool.query(`
         select * from getPuntajeDeLecciones($1)`,[id_usr]);
-        //console.log(temas.rows);
-        //console.log(lecciones.rows);
         return {temas : temas.rows, lecciones : lecciones.rows};
     },
     //Estilo de aprendizaje
@@ -163,7 +156,6 @@ module.exports = {
     set_learning_style : async function(id_usr, data){
         //Obtener el tamaño de data
         let dataSize = Object.keys(data).length;
-        //console.log(data);
         let AR = [0,0];
         let SI = [0,0];
         let VV = [0,0];
@@ -172,7 +164,6 @@ module.exports = {
             //Determinando estilo de aprendizaje [Felder-Silverman]
             //activo-reflexivo 
             if((i+1)==1||(i+1)==5||(i+1)==9||(i+1)==13||(i+1)==17||(i+1)==21||(i+1)==25||(i+1)==29||(i+1)==33||(i+1)==37||(i+1)==41){
-                //console.log(data[1]);
                 if(data[i+1]=='a'){
                     AR[0] += 1;
                 }else if(data[i+1]=='b'){
@@ -204,7 +195,6 @@ module.exports = {
                 }
             }
         }
-        //console.log(AR[0]>AR[1]?(AR[0]-AR[1])+"A":(AR[1]-AR[0])+"B");
         const result = await pool.query(`
         select * from guardarEstilo($1, $2, $3, $4, $5)`,
         [id_usr, AR[0]>AR[1]?(AR[0]-AR[1])+"A":(AR[1]-AR[0])+"B",
@@ -228,6 +218,22 @@ module.exports = {
         select * from guardar_puntaje_tema($1, $2, $3, $4)`,
         [id_user, parseInt(id_tema), puntaje, (new Date())]);
         return result;
+    },
+    getMaestro : async function(id_usr){
+        const result = await pool.query(`
+            select (pe.nombre||' '||pe.apellido1||' '||pe.apellido2) nombre, pe.telefono, u.path_foto   
+            from usuario u
+            inner join persona pe
+            on u.id_persona = pe.id_persona 
+            where u.id_usuario = (
+                select p.id_usuario 
+                from estudiante e
+                inner join profesor p
+                on e.id_prof = p.id_prof
+                where e.id_usuario = $1
+            )
+        `,[id_usr]);
+        return result.rows[0];
     }
 }   
 //

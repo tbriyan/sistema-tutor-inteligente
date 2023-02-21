@@ -233,7 +233,6 @@
                 let nombre = $("#nombre").val();
                 nombre = nombre.trimStart();
                 nombre = nombre.trimEnd();
-                //console.log(nombre);
                 let apellido1 = $("#apellido1").val();
                 apellido1 = xtrim(apellido1);
                 let apellido2 = $("#apellido2").val();
@@ -259,7 +258,6 @@
                     $("#message-modal").removeAttr("hidden");
                     $("#no-valido").html(template);
                 }else{
-                    //console.log("Entro por falso");
                     $("#message-modal").attr("hidden", "");
                     saveUser();
                     window.location.href = window.location.href;

@@ -71,9 +71,7 @@ module.exports = {
     deletePrf : async function(id_usr, id_usr_prf){
         const result = await pool.query(`
         select * from eliminarPrf($1, $2)`,[id_usr, id_usr_prf]);
-        //console.log(result.rows[0]);
         return result.rows[0].eliminarprf;
-        //console.log(id_usr+" "+id_usr_prf);
     },
     //Eliminar profesor...
     //To students
@@ -131,8 +129,6 @@ module.exports = {
         const result = await pool.query(`
         select eliminarEst($1,$2)`,[id_usr, id_usr_est]);
         return result.rows[0].eliminarest;
-        //console.log(result.rows[0]);
-        //console.log(id_usr+" "+id_usr_est);
     },
     //FOR PROFILE
     saveName : async function(id_usr, data){

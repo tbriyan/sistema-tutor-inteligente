@@ -220,7 +220,6 @@ let obj = [
         "opciones" : ["piense en los pasos para la solución de los problemas", "piense en las posibles consecuencias o aplicaciones de la solución en un amplio rango de campos"]
     },
 ];
-//console.log(obj);
 $(()=>{
     getPreguntas();
 });

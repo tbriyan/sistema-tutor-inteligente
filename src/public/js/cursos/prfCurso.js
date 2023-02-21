@@ -6,7 +6,6 @@ function listCourses() {
         type: "get",
         url: "/course/list",
         success: function (response) {
-            //console.log(response);
             let template = "";
             response.forEach(curso => {
                 template += `
@@ -73,7 +72,6 @@ function saveCourse() {
             paralelo: $("#paralelo").val()
         },
         success: function (response) {
-            //console.log(response);
             if (response.success) {
                 listCourses();
                 alertify.success(response.success);
@@ -100,7 +98,6 @@ function eliminarCurso(id_curso) {
         }
     );
 
-    //console.log(id_curso);
     //Aqui hacer llamado para eliminar pero con estado
     //Tambien hacer para el editar aunque no es necesario
 }
@@ -158,14 +155,12 @@ function changeColor(id) {
 
     pickr.on('change', (color, instance) => {
         let set = color.toHEXA().toString();
-        //console.log(color.toHEXA().toString());
         document.querySelector(`#card-body${id}`).style.background = set;
         //informar que no se guardará si no da click en save
     });
     pickr.on('save', (color, instance) => {
         //guardar en la bd cuando se presione
         let set = color.toHEXA().toString();
-        //console.log(color.toHEXA().toString());
         document.querySelector(`#card-body${id}`).style.background = set;
         $.ajax({
             type: "post",

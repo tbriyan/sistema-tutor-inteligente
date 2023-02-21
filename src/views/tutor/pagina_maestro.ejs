@@ -7,6 +7,15 @@
     <title>Info - Profesor</title>
     <link rel="stylesheet" href="/css/bootstrap-lumen.min.css">
     <link rel="stylesheet" href="/css/tutor/pagina_principal.css">
+    <style>
+        .foto_maestro{
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
     <!--Navbar-->
@@ -16,10 +25,14 @@
         <div class="row mt-5">
             <%- include("../../views/fragments/navbar_aside", {cursos: false, evaluaciones : false, avance : false, maestro : true}) %> 
             <div class="col-lg-9 border-start px-4 text-center">
-                <img src="/img/logo.png" alt="" width="100px">
-                <p><strong>Prof. Cristina de la Barra</strong></p>
-                <small>Profesora de Quimica Inorganica</small>
-                
+                <% if (maestro.path_foto != null) { %>
+                    <img class="foto_maestro" src="<%= maestro.path_foto %>" alt="foto_maestro" width="150px">
+                <% } else { %>
+                    <img class="foto_maestro" src="/img/logo.png" alt="foto_maestro" width="150px">
+                <% } %>
+                <h3><strong>Prof. <span class="text-capitalize"><%= maestro.nombre %></span></strong></h3>
+                <p class="mb-0">Docente del area de Química</p>
+                <small>Telefono : <%= maestro.telefono %></small>
             </div>
         </div>
     </div>

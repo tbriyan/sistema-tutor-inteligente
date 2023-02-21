@@ -127,8 +127,6 @@ module.exports = {
             const result = await pool.query(`
             select id_estilo from estudiante where id_usuario = $1`,[req.user.id_usuario]);
             user.id_estilo = result.rows[0].id_estilo;
-            //console.log(result.rows);
-            //console.log(user);
             res.render("usuarios/estProfile", {user});
         }
     },
@@ -143,7 +141,6 @@ module.exports = {
     saveName : async function(req, res){
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "ADM" || rol == "PRF" || rol == "EST"){
-            //console.log(req.body);
             if(req.body.nombre.length>0&&req.body.ap.length>0&&req.body.am.length>0){
                 await usuarioModel.saveName(req.user.id_usuario, req.body);
             }
@@ -169,7 +166,6 @@ module.exports = {
     saveTelefono : async function(req, res){
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "ADM" || rol == "PRF" || rol == "EST"){
-            //console.log(req.body);
             if(req.body.telefono.length>0){
                 await usuarioModel.saveTel(req.user.id_usuario, req.body.telefono);
             }

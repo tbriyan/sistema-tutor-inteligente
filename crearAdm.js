@@ -27,8 +27,5 @@ crearSM("briyan", "torrez", "vargas", "M", "bjtorrez", "1234");
 async function encriptarPassword(password){
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    //console.log(hash);
     return hash;
 }
-
-//console.log(await encriptarPassword("1111")); 

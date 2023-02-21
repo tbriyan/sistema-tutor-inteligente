@@ -316,7 +316,6 @@ function getS() {
     $("#descargar_reporte").attr("hidden", "");
     $("#generar_reporte").removeAttr("hidden");
     let id_curso = parseInt(sessionStorage.getItem("curso"));
-    //console.log(typeof (id_curso));
     $.ajax({
         type: "GET",
         url: `/course/${id_curso}/list-r1-estudiantes`,

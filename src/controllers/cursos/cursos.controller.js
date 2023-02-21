@@ -40,7 +40,6 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "PRF"){
             const result = await cursosModel.deleteCourseById(req.user.id_usuario, req.params.id);
-            //console.log(result);
             res.json(result);
         }
     },
@@ -66,7 +65,6 @@ module.exports = {
             const html = fs.readFileSync(path.join(__dirname,"../../views/report-template0.html"), "utf-8");
             const filename = req.user.username+"_report0"+".pdf";
             const result = await cursosModel.get_est_by_curso(req.user.id_usuario, req.params.id);
-            //console.log(result);
             let document = {
                 html: html,
                 data: {
@@ -78,11 +76,9 @@ module.exports = {
             PDF
                 .create(document, options)
                 .then((resp)=>{
-                    //console.log(resp);
                     res.json(filename);
                 })
                 .catch((error)=>{
-                    //console.log(error);
                     res.json("Error al Generar el PDF");
                 });
             //const filepath = filename;//JUGAR CON LA RUTA DE ESTO EN SERVEERRRRRR
@@ -94,12 +90,10 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "ADM"){
             const result = await cursosModel.get_est_by_curso(req.user.id_usuario, req.params.id);
-            //console.log(result);
             res.json(result);         
         }
         if(rol == "PRF"){
             const result = await cursosModel.get_est_by_curso(req.user.id_usuario, req.params.id);
-            //console.log(result);
             res.json(result);
         }
     },
@@ -107,7 +101,6 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "PRF"){
             const result = await cursosModel.get_point_est_by_id(req.user.id_usuario, req.params.id);
-            //console.log(result);
             res.json(result);         
         }
     }

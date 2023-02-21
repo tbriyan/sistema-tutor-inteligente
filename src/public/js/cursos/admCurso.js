@@ -74,12 +74,10 @@ function getS(id_curso, nombre_curso, nombre_profesor) {
     $("#quote_curso").html(nombre_curso);
     $("#descargar_reporte").attr("hidden", "");
     $("#generar_reporte").removeAttr("hidden");
-    //console.log(typeof (id_curso));
     $.ajax({
         type: "GET",
         url: `/course/${id_curso}/list-r1-estudiantes`,
         success: function (response) {
-            //console.log(response);
             let temp_estudiante = "";
             response.forEach((estudiante, index) => {
                 temp_nota_ejercicio = "";
@@ -109,45 +107,8 @@ function getS(id_curso, nombre_curso, nombre_profesor) {
         }
     });
 }
-/*function getS(id_curso){
-    $("#descargar_reporte").attr("hidden", "");
-    $("#generar_reporte").removeAttr("hidden");
-    sessionStorage.setItem("id_curso", id_curso);
-    $.ajax({
-        type: "GET",
-        url: `/course/${id_curso}/list-r1-estudiantes`,
-        success: function (response) {
-            console.log(response);
-            let temp_estudiante = "";
-            response.forEach((element, index) => {
-                let temp_nota = "";
-                element.notas.forEach(nota => {
-                    temp_nota += `
-                    <td class="text-center">${nota.puntaje?nota.puntaje:0}</td>`;
-                });
-                temp_estudiante += `
-                    <tr>
-                        <td class="text-center"><strong>${index+1}</strong></td>
-                        <td class="text-start text-capitalize">${element.persona.nombre}</td>
-                        <td class="text-center">
-                            <strong>${element.persona.sexo}</strong>
-                        </td>
-                        ${temp_nota}
-                        <td class="text-center ${element.promedio>50?'text-success':'text-danger'}">
-                            <strong>${element.promedio?element.promedio:0}</strong>
-                        </td>
-                    </tr>
-                `;
-            });
-            $("#table-modal-body").html(temp_estudiante);
-            //$("#adm-report0").attr("href", "/docs/"+response.filepath);
-        }
-    });
-}*/
 async function g_report0(){
     let id_curso = parseInt(sessionStorage.getItem("id_curso"));
-    //console.log(id_curso);
-    //console.log(typeof(id_curso));
     $("#generar_reporte").attr("hidden", "");
     $("#esperar_reporte").removeAttr("hidden");
     let result =  await $.ajax({
@@ -159,5 +120,4 @@ async function g_report0(){
         $("#descargar_reporte").removeAttr("hidden");
         $("#descargar_reporte").attr("href", "/docs/"+result);
     }
-    //console.log(result);
 }
