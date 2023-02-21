@@ -13,9 +13,9 @@ async function crearSM(nombre, ap1, ap2, sexo, username, password){
     console.log(p_res);
     //Crear usuario
     let date = new Date();
-    let fecha = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
+    //let fecha = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
     let u_sql = "INSERT INTO usuario(id_persona, id_rol, username, pass, fecha_cre) VALUES($1, 1, $2, $3, $4) RETURNING id_usuario";
-    let u_val = [p_res, username, await encriptarPassword(password), fecha];
+    let u_val = [p_res, username, await encriptarPassword(password), date];
     let u_res = await pool.query(u_sql, u_val);
     u_res = u_res.rows[0].id_usuario;
     //Crear adm
