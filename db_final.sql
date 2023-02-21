@@ -153,74 +153,6 @@ insert into ejercicio(id_ejercicio, descripcion, id_leccion)
 values(2, 'Estas listo?, Metal o No Metal, pon a prueba tu conocimiento en Oxidos y sienta las bases de tu futuro!', 2);
 --============================= FIN DE DATOS PARA INGRESAR A LA COLUMNA EJERCICIO ==========================
 
---============================= BANCO DE DATOS DE PREGUNTAS PARA CADA EJERCICIO ==========================
-insert into pregunta(id_pregunta, id_ejercicio, pregunta)
-	values(1, 1, '{"pregunta" : "¿Quien creó el metodo cartesiano?",
-            "opciones" : ["René Descartes", "Albert Einstein", "Nikola Tesla"],
-            "respuesta" : "René Descartes"}'),
-
-    (2, 1, '{"pregunta" : "La Química es la ciencia que estudia...",
-            "opciones" : [" el origen, la evolución y las características de los seres vivos", "las propiedades de la materia y de la energía", "los cambios y transformaciones que sufre la materia", "ninguna de las anteriores"],
-            "respuesta" : "los cambios y transformaciones que sufre la materia"}'),
-
-    (3, 1, '{"pregunta" : "¿Quienes fueron los primeros Alquimistas?",
-            "opciones" : ["Naturistas Rusos", "Científicos Ingleses", "Científicos Islámicos"],
-            "respuesta" : "Científicos Islámicos"}'),
-
-    (4, 1, '{"pregunta" : "¿Alguna vez la Química fue considerada esotérica (espiritual)?",
-            "opciones" : ["No", "Si"],
-            "respuesta" : "Si"}'),        
-
-    (5, 1, '{"pregunta" : "¿En que siglo comenzó a ser considerada la Química como ciencia?",
-            "opciones" : ["XVIII (18)", "XX (20)", "XIX (19)"],
-            "respuesta" : "XVIII (18)"}'), 
-
-    (6, 1, '{"pregunta" : "En la antigüedad la Química era conocida como...",
-            "opciones" : ["Magia", "Ocultismo", "Alquimia", "Nigromancia"],
-            "respuesta" : "Alquimia"}'), 
-
-    (7, 1, '{"pregunta" : "¿En cuantas ramas se divide la Química?",
-            "opciones" : ["5", "2", "4" ,"3"],
-            "respuesta" : "4"}'), 
-
-    (8, 1, '{"pregunta" : "La Bioquímica pertenece a la rama de...",
-            "opciones" : ["Química Aplicada", "Química Pura", "Química Descriptiva", "Química General"],
-            "respuesta" : "Química Aplicada"}'), 
-
-    (9, 1, '{"pregunta" : "Es la unidad mas pequeña posible de un elemento Químico...",
-            "opciones" : ["El Neutrón", "El núcleo", "El Átomo"],
-            "respuesta" : "El Átomo"}'), 
-
-    (10, 1, '{"pregunta" : "¿De cuantas subestructuras esta compuesta el Átomo?",
-            "opciones" : ["3", "6", "4"],
-            "respuesta" : "3"}'), 
-
-    (11, 1, '{"pregunta" : "¿De que está formado el Núcleo Atómico?",
-            "opciones" : ["Protones y Electrones", "Electrones y Neutrones", "Protones y Neutrones"],
-            "respuesta" : "Protones y Neutrones"}'), 
-
-    (12, 1, '{"pregunta" : "¿Cuantas Nomenclaturas Químicas se utilizan comunmente?",
-            "opciones" : ["2", "3", "4"],
-            "respuesta" : "3"}'), 
-
-    (13, 1, '{"pregunta" : "Óxido de Potasio, está en nomenclatura...",
-            "opciones" : ["Tradicional", "Iupac", "Stock"],
-            "respuesta" : "Tradicional"}'), 
-
-    (14, 1, '{"pregunta" : "Monóxido de carbono, está en nomenclatura...",
-            "opciones" : ["Tradicional", "Iupac", "Stock"],
-            "respuesta" : "Iupac"}'), 
-
-    (15, 1, '{"pregunta" : "Tetracloruro de Potasio, está en nomenclatura...",
-            "opciones" : ["Tradicional", "Iupac", "Stock"],
-            "respuesta" : "Iupac"}'), 
-
-    (16, 1, '{"pregunta" : "Óxido de Hierro, está en nomenclatura...",
-            "opciones" : ["Tradicional", "Iupac", "Stock"],
-            "respuesta" : "Stock"}')
-            ;
---============================= FIN DEL BANCO DE DATOS DE PREGUNTAS DE EJERCICIO ==========================
-
 --================================ INICIO DE BANCO DE CONTENIDO =============================
 insert into bc_tema values(1,
 '<iframe width="780" height="420" src="https://www.youtube.com/embed/qYDtPeOOWl8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
@@ -412,7 +344,7 @@ insert into bc_tema values(4,
     </div>
 ');
 insert into bc_tema values(5,
-'<iframe width="780" height="420" src="https://www.youtube.com/embed/lBCHQugsl2E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+'<iframe width="780" height="420" src="https://www.youtube.com/embed/lEUAs_uszx8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
 '
     <div class="container">
         <h2 class="text-center">
