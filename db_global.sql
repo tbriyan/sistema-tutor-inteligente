@@ -677,9 +677,32 @@ as $$
 	declare
 		id_p numeric := (select id_prof from profesor where id_usuario = id_usr_prf);
 	begin
-		insert into curso(id_prof, grado, paralelo, disabled) 
+		if exists(select 1 from curso c where c.grado = input_grado) then
+			if exists(select 1 from curso c where c.grado = input_grado and c.paralelo = input_paralelo) then
+				--verificamos si fue eliminado
+				if(select 1 from curso c where c.grado = input_grado and c.paralelo = input_paralelo and c.disabled = true) then
+					
+					update curso
+					set disabled = false
+					where grado = input_grado
+					and paralelo = input_paralelo;
+				
+					return 'Curso creado con exito';
+				else 
+					return 'El curso ya existe!';
+				end if;
+			else
+				insert into curso(id_prof, grado, paralelo, disabled) 
+				values(id_p, input_grado, input_paralelo, false);
+				return 'Curso creado con exito';
+				
+			end if;
+		else
+			insert into curso(id_prof, grado, paralelo, disabled) 
 			values(id_p, input_grado, input_paralelo, false);
-		return 'Curso creado con exito!';
+			return 'Curso creado con exito';
+			
+		end if;
 	end
 $$
 language plpgsql;
@@ -1097,6 +1120,7 @@ language plpgsql;
 --====================================================================================--
 -- Funcion guardar profesor - modified
 --====================================================================================--
+
 create or replace function savePrf(
 	id_usr int,
 	nom varchar,
@@ -1113,6 +1137,14 @@ as $$
 		id_p numeric; --id_persona nueva
 		id_u numeric; --id_usuario nuevo
 	begin
+		if exists(
+			select 1 from persona
+			where nombre = nom 
+			and apellido1 = ap 
+			and apellido2 = am
+		) then
+			return 'El Usuario ya existe!';
+		else
 		--crear persona
 		insert into persona(nombre, apellido1, apellido2, telefono, sexo)
 			values(nom, ap, am, tel, sex) returning id_persona into id_p;
@@ -1123,6 +1155,7 @@ as $$
 		insert into profesor(id_usuario, id_adm, disabled) values(id_u, id_a, false);
 		
 		return 'Profesor creado con exito!';
+		end if;
 	end
 $$
 language plpgsql;
@@ -1323,7 +1356,7 @@ language plpgsql;
 -- Funcion crear estudiante - modified
 --====================================================================================--
 create or replace function saveEst(
-	id_usr_pf int,
+id_usr_pf int,
 	id_cur int,
 	nom varchar,
 	ap varchar,
@@ -1339,6 +1372,15 @@ as $$
 		id_u numeric;
 		id_e numeric;
 	begin
+		
+		if exists(
+			select 1 from persona
+			where nombre = nom 
+			and apellido1 = ap 
+			and apellido2 = am
+		) then
+			return 'El estudiante ya Existe';
+		else
 		--create persona
 		insert into persona(nombre, apellido1, apellido2, telefono, sexo)
 			values(nom, ap, am, tel, sex) returning id_persona into id_p;
@@ -1369,6 +1411,7 @@ as $$
 		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 2);
 		
 		return 'Estudiante creado con exito!';
+		end if;
 	end
 $$
 language plpgsql;
