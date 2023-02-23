@@ -9,7 +9,6 @@ $(function () {
             url: "/course/list",
             success: function (response) {
                 if(response.length>0){
-                    console.log(response);
                     let btn_filtrar = document.getElementById("btn_filtrar");
                     btn_filtrar.classList.remove("disabled");
                 }

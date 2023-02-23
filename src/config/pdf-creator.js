@@ -16,12 +16,14 @@ module.exports = {
             </div>
             <div></div>
           </div>`
-        }
+        },
+        fontSize: '12'
     },
     options1 : {
       //phantomPath: path.join(__dirname, '../../node_modules/phantomjs-prebuilt/bin/phantomjs'),
       format: "Letter",
       orientation: "portrait",
       border: "10mm",
+      fontSize: '12'
   }
 }

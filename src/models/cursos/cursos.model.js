@@ -82,8 +82,10 @@ module.exports = {
             ,[estudiante.id_estudiante]);
             estudiante.notas_evaluacion = notasEvaluacion.rows;
             let promedio_evaluacion = await pool.query(`
-            select (sum(ee.puntaje)::numeric/2::numeric)::decimal(4,2) promedio  from estudiante_ejercicio ee where ee.id_estudiante = $1`
-            ,[estudiante.id_estudiante]);
+                select (coalesce(sum(ee.puntaje), 0)::numeric/2::numeric)::decimal(4,2) promedio
+                from estudiante_ejercicio ee 
+                where ee.id_estudiante = $1
+            `,[estudiante.id_estudiante]);
             estudiante.promedio_evaluacion = parseInt(promedio_evaluacion.rows[0].promedio);
             let notasEjercicios = await pool.query(`
             select cast(round(
