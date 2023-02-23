@@ -19,4 +19,6 @@ router.post("/profile/save-sex", isLoggedIn, controller.saveSex);
 router.post("/profile/save-tel", isLoggedIn, controller.saveTelefono);
 router.post("/profile/save-pass", isLoggedIn, controller.savePass);
 router.post("/profile/save-style", isLoggedIn, controller.saveStyle);
+
+router.get("/:id/r-usuarios", isLoggedIn, controller.reporte_usuarios);
 module.exports = router;

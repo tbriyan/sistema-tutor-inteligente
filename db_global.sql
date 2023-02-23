@@ -2439,3 +2439,34 @@ insert into pregunta(id_pregunta, id_ejercicio, pregunta)
 	)
 ;
 --============================= FIN DEL BANCO DE DATOS DE PREGUNTAS DE EJERCICIO ==========================
+
+
+--Funciones nuevas
+
+create or replace function fn_reporte_generar_usuarios_estudiantes(input_idUsuario int, input_idCurso int)
+returns table(
+	nombre varchar,
+	usuario varchar,
+	contrasenia varchar
+)
+as $$
+	declare
+		vid_prof int;
+	begin 
+		vid_prof := (select id_prof from profesor where id_usuario = input_idUsuario);
+		return query	
+			select (p.nombre||' '||p.apellido1||' '||p.apellido2)::varchar as nombre,
+			uu.username as usuario, p.apellido1 as constrasenia
+			from
+			(select *
+			from usuario u 
+			inner join estudiante e 
+			on u.id_usuario = e.id_usuario 
+			where e.disabled = false
+			and e.id_curso = input_idCurso
+			and e.id_prof = vid_prof) as uu
+			inner join persona p 
+			on p.id_persona = uu.id_persona;
+	end;
+$$
+language plpgsql;

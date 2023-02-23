@@ -2,6 +2,11 @@ const pool = require("../../config/database");
 const usuarioModel = require("../../models/usuarios/usuarios.model");
 const path = require("path");
 const { obtenerRol } = require("../../utils/login.helper");
+//Report pdf
+const fs = require("fs");
+const PDF = require("pdf-creator-node");
+const { options1 } = require("../../config/pdf-creator");
+
 module.exports = {
     showView : async function(req, res){
         const rol = await obtenerRol(req.user.id_usuario);
@@ -186,5 +191,35 @@ module.exports = {
             await usuarioModel.saveStyle(req.user.id_usuario, req.body.estilo);
             res.redirect("/user/profile")
         }
+    },
+    //reporte usuarios
+    reporte_usuarios : async function(req, res){
+        const rol = await obtenerRol(req.user.id_usuario);
+        if(rol == "PRF" || rol == "ADM"){
+            let id_curso = parseInt(req.params.id);
+            //#########
+            const html = fs.readFileSync(path.join(__dirname,"../../views/report-template1.html"), "utf-8");
+            const filename = req.user.username+"_report1"+".pdf";
+            const result = await usuarioModel.getUsuariosReport1(req.user.id_usuario, id_curso);
+            
+            let document = {
+                html: html,
+                data: {
+                  result : result,
+                },
+                path : path.join(__dirname, "../../public/docs/")+filename
+                //path: "./docs/"+filename,
+            }
+            PDF
+                .create(document, options1)
+                .then((resp)=>{
+                    res.json(filename);
+                })
+                .catch((error)=>{
+                    res.json("Error al Generar el PDF");
+                });
+                
+        }
+        
     }
 }

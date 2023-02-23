@@ -164,5 +164,12 @@ module.exports = {
     saveStyle : async function(id_usr, style){
         pool.query(`
         update estudiante set id_estilo = $1 where id_usuario = $2`,[Number(style), id_usr]);
+    },
+    getUsuariosReport1 : async function(id_usr, id_curso){
+        const result = await pool.query(`
+            select * from fn_reporte_generar_usuarios_estudiantes($1, $2)
+        `,[id_usr, id_curso]);
+        //console.log(result.rows);
+        return result.rows;
     }
 }
