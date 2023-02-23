@@ -13,9 +13,9 @@ const tutorRouter = require("./router/tutor/tutor.route");
 //Inicializaciones
 require("./config/passport");
 //Settings
+
 //Local
 //app.set("port", process.env.PORT || 8000);
-//Server
 app.set("port", process.env.PORT || 80);
 
 app.set("views", path.join(__dirname, "views"));
