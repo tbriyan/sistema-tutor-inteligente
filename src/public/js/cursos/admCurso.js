@@ -74,6 +74,7 @@ function getS(id_curso, nombre_curso, nombre_profesor) {
     $("#quote_curso").html(nombre_curso);
     $("#descargar_reporte").attr("hidden", "");
     $("#generar_reporte").removeAttr("hidden");
+    sessionStorage.setItem("id_curso", id_curso);
     $.ajax({
         type: "GET",
         url: `/course/${id_curso}/list-r1-estudiantes`,
@@ -109,6 +110,7 @@ function getS(id_curso, nombre_curso, nombre_profesor) {
 }
 async function g_report0(){
     let id_curso = parseInt(sessionStorage.getItem("id_curso"));
+    console.log(id_curso);
     $("#generar_reporte").attr("hidden", "");
     $("#esperar_reporte").removeAttr("hidden");
     let result =  await $.ajax({
