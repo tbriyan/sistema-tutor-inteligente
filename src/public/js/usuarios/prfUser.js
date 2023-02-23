@@ -8,6 +8,11 @@ $(function () {
             type: "get",
             url: "/course/list",
             success: function (response) {
+                if(response.length>0){
+                    console.log(response);
+                    let btn_filtrar = document.getElementById("btn_filtrar");
+                    btn_filtrar.classList.remove("disabled");
+                }
                 let template = "";
                 response.forEach(curso => {
                     template += `
@@ -483,10 +488,13 @@ function getS1(id_usuario) {
 }
 //==============================================others
 function listUsersByFilter(page, id_curso) {
-    sessionStorage.setItem("curso", id_curso);
-    sessionStorage.removeItem("index");
-    listUsers(page);
-    limpiarBuscar();
+    let select = document.getElementById("grado-curso-usuario");
+    if(select.value){
+        sessionStorage.setItem("curso", id_curso);
+        sessionStorage.removeItem("index");
+        listUsers(page);
+        limpiarBuscar();
+    }
 }
 function deleteSession() {
     sessionStorage.removeItem("curso");

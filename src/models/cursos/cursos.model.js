@@ -16,7 +16,7 @@ module.exports = {
         const result = await pool.query(`
         select * from saveCourse($1, $2, $3);`
         ,[id_usr_prf, data.grado, data.paralelo]);
-        return result.rows[0].savecourse;
+        return result.rows[0];
     },
     changeColor : async function(data){
         const result = await pool.query(`

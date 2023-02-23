@@ -24,7 +24,7 @@
                 <select id="grado-curso-usuario" name="curso" style="width: auto;text-transform: uppercase;">
                     <option value="1">CUARTO C</option>
                 </select>
-                <button onclick="listUsersByFilter(1, document.getElementById('grado-curso-usuario').value)"
+                <button id="btn_filtrar" onclick="listUsersByFilter(1, document.getElementById('grado-curso-usuario').value)"
                     class="ms-2 btn btn-sm btn-secondary" style="width: auto;">Filtrar</button>
             </div>
             <div id="body">
@@ -363,6 +363,15 @@ function getS() {
                     $("#descargar_reporte").attr("href", "/docs/"+result);
                 }
             }
+
+    //filtrar
+    $(document).ready(function () {
+        let curso = sessionStorage.getItem("curso");
+        if(curso == null){
+            let btn_filtrar = document.getElementById("btn_filtrar");
+            btn_filtrar.classList.add("disabled");
+        }
+    });
         </script>
 </body>
 

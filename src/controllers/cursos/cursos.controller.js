@@ -19,7 +19,7 @@ module.exports = {
         const rol = await obtenerRol(req.user.id_usuario);
         if(rol == "PRF"){
             const result = await cursosModel.saveCourse(req.user.id_usuario, req.body);
-            res.json({success : result});
+            res.json(result);
         }
     },
     changeColor : async function(req, res){

@@ -671,11 +671,14 @@ insert into bc_tema values(7,
 -- Funcion crear curso - Profesor - modified
 --====================================================================================--
 
-create or replace function saveCourse(id_usr_prf int, input_grado varchar, input_paralelo varchar) returns
-	varchar
+create or replace function saveCourse(id_usr_prf int, input_grado varchar, input_paralelo varchar) 
+returns
+	table(oestado int, omensaje varchar)
 as $$
 	declare
 		id_p numeric := (select id_prof from profesor where id_usuario = id_usr_prf);
+		oestado int;
+		omensaje varchar;
 	begin
 		if exists(select 1 from curso c where c.grado = input_grado) then
 			if exists(select 1 from curso c where c.grado = input_grado and c.paralelo = input_paralelo) then
@@ -686,23 +689,29 @@ as $$
 					set disabled = false
 					where grado = input_grado
 					and paralelo = input_paralelo;
-				
-					return 'Curso creado con exito';
+					
+					oestado := 1;
+					omensaje := 'Curso creado con exito';
 				else 
-					return 'El curso ya existe!';
+					oestado := 0;
+					omensaje := 'El curso ya existe';
 				end if;
 			else
 				insert into curso(id_prof, grado, paralelo, disabled) 
 				values(id_p, input_grado, input_paralelo, false);
-				return 'Curso creado con exito';
+				
+				oestado := 1;
+				omensaje := 'Curso creado con exito';
 				
 			end if;
 		else
 			insert into curso(id_prof, grado, paralelo, disabled) 
 			values(id_p, input_grado, input_paralelo, false);
-			return 'Curso creado con exito';
 			
+			oestado := 1;
+			omensaje := 'Curso creado con exito';
 		end if;
+		return query select oestado, omensaje;
 	end
 $$
 language plpgsql;
@@ -775,6 +784,11 @@ as $$
 	declare
 		id_p numeric := (select id_prof from profesor where id_usuario = id_usr_prf);
 	begin 
+		--Eliminamos estudiantes
+		update estudiante
+		set disabled = true
+		where id_curso = id_curso_in;
+		--Eliminamos el curso
 		update curso set disabled = true where id_prof = id_p and id_curso = id_curso_in;
 		return 'Curso eliminado con exito!';
 	end
