@@ -213,9 +213,11 @@ module.exports = {
             PDF
                 .create(document, options1)
                 .then((resp)=>{
+                    console.log(resp);
                     res.json(filename);
                 })
                 .catch((error)=>{
+                    console.log(error);
                     res.json("Error al Generar el PDF");
                 });
                 

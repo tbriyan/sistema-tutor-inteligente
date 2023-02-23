@@ -76,9 +76,11 @@ module.exports = {
             PDF
                 .create(document, options)
                 .then((resp)=>{
+                    console.log(resp);
                     res.json(filename);
                 })
                 .catch((error)=>{
+                    console.log(error);
                     res.json("Error al Generar el PDF");
                 });
             //const filepath = filename;//JUGAR CON LA RUTA DE ESTO EN SERVEERRRRRR
