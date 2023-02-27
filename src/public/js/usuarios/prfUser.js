@@ -47,8 +47,8 @@ function listUsers(page) {
                     <td style="text-transform: capitalize;">${user.nombre + " " + user.apellido1 + " " + user.apellido2}</td>
                     <td class="text-center">${user.username}</td>
                     <td class="text-center">Estudiantes</td>
-                    <td class="text-center">${user.telefono}</td>
-                    <td class="text-center">${user.sexo}</td>
+                    <td class="text-center">${user.telefono?user.telefono:""}</td>
+                    <td class="text-center">${user.sexo?user.sexo:""}</td>
                     <td class="text-center">${dateTransform(user.fecha_cre)}</td>
                     <td class="text-end">
                         <button onclick="getUser(${user.id_usuario})" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
@@ -190,12 +190,33 @@ $("#buscar").keyup(function (e) {
                         <td style="text-transform: capitalize;">${user.nombre + " " + user.apellido1 + " " + user.apellido2}</td>
                         <td>${user.username}</td>
                         <td>Profesor</td>
-                        <td>${user.telefono}</td>
+                        <td>${user.telefono?user.telefono:""}</td>
                         <td class="text-center">${formatearSexo(user.sexo)}</td>
                         <td>${dateTransform(user.fecha_cre)}</td>
                         <td class="text-end">
-                            <button onclick="getUser(${user.id_usuario})" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">Editar<i class="ms-1 bi bi-pencil-square"></i></button>
-                            <button onclick="deleteUser(${user.id_usuario})" class="btn btn-sm btn-danger">Eliminar<i class="ms-1 bi bi-trash-fill"></i></button>
+                            <button onclick="getUser(${user.id_usuario})" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                            <i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                              <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                            </i>
+                            </button>
+                            <button onclick="deleteUser(${user.id_usuario})" class="btn btn-sm btn-danger">
+                            <i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                            </svg>
+                            </i>
+                            </button>
+                            <button onclick="getS1(${user.id_usuario})" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalNotaEst">
+                            <i>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                              <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                            </svg>
+                            </i>
+                            </button>
                         </td>
                       </tr>`;
                         i++;

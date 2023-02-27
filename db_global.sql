@@ -1873,9 +1873,80 @@ execute procedure tr_estudiante_delete();
 
 
 
+--Nueva funcion para generar usuairos en lote
 
+CREATE OR REPLACE FUNCTION guardar_lote_estudiante(id_usr_pf integer, id_cur integer, nom character varying, ap character varying, am character varying, sex character varying, username character varying, pass character varying)
+ RETURNS table(
+ 	oestado int,
+ 	omensaje varchar
+ )
+ LANGUAGE plpgsql
+AS $function$
+	declare
+		id_pf numeric := (select id_prof from profesor p where p.id_usuario = id_usr_pf);
+		id_p numeric;
+		id_u numeric;
+		id_e numeric;
+	begin
+		
+		if exists(
+			select 1 from persona
+			where nombre = nom 
+			and apellido1 = ap 
+			and apellido2 = am
+		) then
+			oestado := 0;
+			omensaje := 'El estudiante ya Existe';
+		else
+		--create persona
+		insert into persona(nombre, apellido1, apellido2, sexo)
+			values(nom, ap, am, sex) returning id_persona into id_p;
+		--create usuario
+		insert into usuario(id_persona, id_rol, username, pass, fecha_cre)
+			values(id_p, 3, username, pass, (select current_timestamp)) returning id_usuario into id_u;
+		--create estudiante
+		insert into estudiante(id_usuario, id_prof, id_curso, disabled) 
+			values(id_u, id_pf, id_cur, false) returning id_estudiante into id_e;
+		--Cambiar a Whiles o Fors cuando se pueda
+		--=========MODULO ESTUDIANTE - TUTOR=========
+		--====================Asignar Lecciones al Estudiante==================
+		insert into estudiante_leccion(id_estudiante, id_leccion) values (id_e, 1);
+		insert into estudiante_leccion(id_estudiante, id_leccion) values (id_e, 2);
+		
+		--====================Asignar Temas al Estudiante==================
+		
+		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 1);
+		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 2);
+		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 3);
+		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 4);
+		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 5);
+		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 6);
+		insert into estudiante_tema(id_estudiante, id_tema) values (id_e, 7);
+	
+		--====================Asignar Ejercicios al Estudiante==================
+		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 1);
+		insert into estudiante_ejercicio(id_estudiante, id_ejercicio) values (id_e, 2);
+		
+		oestado := 1;
+		omensaje := 'Estudiante creado con exito';
+		end if;
+		return query select oestado, omensaje;
+	end
+$function$
+;
 
-
+create or replace function existe_usuario(iuser varchar)
+returns boolean
+as $$
+	begin
+		if exists (select 1 from usuario where username = iuser)then 
+			return true;
+		else 
+			return false;
+		end if;
+	end
+$$
+language plpgsql;
 
 --PARA EL TEMA 1
 insert into ejercicio0 values(1, 1, '{

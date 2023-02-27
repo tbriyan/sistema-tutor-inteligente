@@ -2,11 +2,12 @@ const pool = require("../../config/database");
 const usuarioModel = require("../../models/usuarios/usuarios.model");
 const path = require("path");
 const { obtenerRol } = require("../../utils/login.helper");
+const XLSX = require('xlsx');
+let archivo_excel;
 //Report pdf
 const fs = require("fs");
 const PDF = require("pdf-creator-node");
 const { options1 } = require("../../config/pdf-creator");
-
 module.exports = {
     showView : async function(req, res){
         const rol = await obtenerRol(req.user.id_usuario);
@@ -223,5 +224,40 @@ module.exports = {
                 
         }
         
+    },
+    subir_usuarios : async function(req, res){
+        const rol = await obtenerRol(req.user.id_usuario);
+        if(rol == "PRF" || rol == "ADM"){
+            try {
+                let name =  req.file.originalname;
+                let aux = name.split(".");
+                name = aux[aux.length-1];
+                if(name === "xls" || name === "xlsx"){
+                    archivo_excel = req.file.buffer;
+                    return res.json({success : "Es un excel!"});
+                }else{
+                    return res.json({error : "Formato incorrecto"});
+                }
+            } catch (error) {
+                return res.json({error : "Ocurrio un error recargue la pagina!"})
+            }
+        }
+        return res.json({error: "Usuario no autorizado!"});
+    },
+    cargar_usuarios : async function(req, res){
+        try {
+            const archivo = XLSX.read(archivo_excel);
+            const hoja = archivo.SheetNames[0];
+            const data = XLSX.utils.sheet_to_json(archivo.Sheets[hoja], {
+                header : 1
+            });
+            const result = await usuarioModel.generar_usuarios(req.user.id_usuario, req.params.id, data);
+            res.json(result);
+        } catch (error) {
+            res.json({
+                oestado : 0,
+                omensaje : "El archivo contiene errores de formato"
+            })
+        }
     }
 }

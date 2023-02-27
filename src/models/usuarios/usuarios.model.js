@@ -171,5 +171,90 @@ module.exports = {
         `,[id_usr, id_curso]);
         //console.log(result.rows);
         return result.rows;
+    },
+    generar_usuarios : async function(id_usr, id_curso, data){
+        data.shift();
+        let existentes = [];
+        let v_aux;
+        let nombre;
+        let ape1;
+        let ape2;
+        let sexo;
+        let result;
+        let flag = true;
+        console.log(data[0][0].split(" ").length);
+        for (const element of data) {
+            v_aux = element[0].trim().split(" ");
+            switch (v_aux.length) {
+                case 4:
+                    ape1 = v_aux[0].toLowerCase();
+                    ape2 = v_aux[1].toLowerCase();
+                    nombre = v_aux[2].toLowerCase()+" "+v_aux[3].toLowerCase();
+                    if(element[1]){
+                        sexo = element[1].toUpperCase();
+                    }else{
+                        sexo = "";
+                    }
+                    break;
+                case 3:
+                    ape1 = v_aux[0].toLowerCase();
+                    ape2 = v_aux[1].toLowerCase();
+                    nombre = v_aux[2].toLowerCase();
+                    if(element[1]){
+                        sexo = element[1].toUpperCase();
+                    }else{
+                        sexo = "";
+                    }
+                    break;
+                case 2:
+                    ape1 = v_aux[0].toLowerCase();
+                    ape2 = "";
+                    nombre = v_aux[1].toLowerCase();
+                    if(element[1]){
+                        sexo = element[1].toUpperCase();
+                    }else{
+                        sexo = "";
+                    }
+                    break;
+                default:
+                    ape1 = v_aux[0].toLowerCase();
+                    ape2 = v_aux[1].toLowerCase();
+                    nombre = v_aux[2].toLowerCase()+" "+v_aux[3].toLowerCase();
+                    if(element[1]){
+                        sexo = element[1].toUpperCase();
+                    }else{
+                        sexo = "";
+                    }
+                    break;
+            }
+            result = await pool.query(`
+            select * from guardar_lote_estudiante($1, $2, $3, $4, $5, $6, $7, $8)
+            `, [id_usr, id_curso, nombre, ape1, ape2, sexo,
+                await generarUsername(nombre, ape1, ape2),
+                await encriptarPassword(ape1)]);
+            
+            if(result.rows[0].oestado==0){
+                flag = false;
+                /*let object = {
+                    nombre,
+                    ape1,
+                    ape2,
+                    sexo
+                }
+                existentes.push(object);*/
+                break;
+            }
+        }
+        if(flag==1){
+            return {
+                omensaje : "Usuarios importados exitosamente",
+                oestado : 1}
+        }else{
+            return {
+                omensaje : "Usuarios existentes, no se importo",
+                oestado : 0
+                //lista : existentes
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const controller = require("../../controllers/usuarios/usuarios.controller");
 const {isLoggedIn} = require("../../utils/login.helper");
-const { uploadPhotoProfile } = require("../../utils/usuarios.helper");
+const { uploadPhotoProfile, uploadFile } = require("../../utils/usuarios.helper");
 
 router.get("/", isLoggedIn, controller.showView);
 router.get("/list", isLoggedIn, controller.listUsers);
@@ -21,4 +21,6 @@ router.post("/profile/save-pass", isLoggedIn, controller.savePass);
 router.post("/profile/save-style", isLoggedIn, controller.saveStyle);
 
 router.get("/:id/r-usuarios", isLoggedIn, controller.reporte_usuarios);
+router.post("/cargar-usuarios", isLoggedIn, uploadFile, controller.subir_usuarios);
+router.post("/:id/importar-usuarios", isLoggedIn, controller.cargar_usuarios);
 module.exports = router;
