@@ -7,10 +7,10 @@ const pool = new Pool({
     password : "postgres",
     port : 5432*/
     //Configuracion server
-    user : "admin",
+    user : "postgres",
     host : "localhost",
-    database : "testing",
-    password : "71287",
+    database : "db_quimtutor",
+    password : "postgres",
     port : 5432
 });
 if(pool){
