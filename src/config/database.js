@@ -1,19 +1,14 @@
 const { Pool } = require("pg");
+require('dotenv').config()
+
 const pool = new Pool({
-    //Condiguración local
-    /*user : "postgres",
-    host : "localhost",
-    database : "dbfinal",
-    password : "postgres",
-    port : 5432*/
-    //Configuracion server
-    user : "postgres",
-    host : "localhost",
-    database : "db_quimtutor",
-    password : "postgres",
-    port : 5432
+    user: process.env.DB_USERNAME,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: Number(process.env.DB_PORT)
 });
-if(pool){
+if (pool) {
     console.log("Database connected");
 }
 
