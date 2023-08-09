@@ -18,17 +18,7 @@ passport.use("login", new LocalStrategy({
         if (!passwordIsValid) {
             return done(null, false, req.flash("message", "Contraseña incorrecta!"));
         }
-        const rol = await pool.query(`SELECT tipo FROM rol WHERE id_rol =  $1`, [user.id_rol])
-        const nuevoUsuario = {
-            id_usuario: user.id_usuario,
-            id_persona: user.id_persona,
-            id_rol: user.id_rol,
-            username: user.username,
-            fecha_cre: user.fecha_cre,
-            path_foto: user.path_foto,
-            rol: rol.rows[0].tipo
-        }
-        done(null, nuevoUsuario);
+        done(null, user);
 
     } else {
         return done(null, false, req.flash("message", "Usuario no encontrado!"));
@@ -41,5 +31,17 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id_usuario, done) => {
     const result = await pool.query("SELECT * FROM usuario WHERE id_usuario = $1", [id_usuario]);
-    done(null, result.rows[0]);
+    const user = result.rows[0]
+    const rol = await pool.query(`SELECT tipo FROM rol WHERE id_rol =  $1`, [user.id_rol])
+    const nuevoUsuario = {
+        id_usuario: user.id_usuario,
+        id_persona: user.id_persona,
+        id_rol: user.id_rol,
+        username: user.username,
+        fecha_cre: user.fecha_cre,
+        path_foto: user.path_foto,
+        rol: rol.rows[0].tipo
+    }
+    // done(null, result.rows[0]);
+    done(null, nuevoUsuario)
 });

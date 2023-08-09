@@ -1,7 +1,7 @@
 const pool = require("../../config/database")
 
 module.exports = {
-    getCourses : async function(id_usr_prf){
+    listarCursosPorIdProfesor : async function(id_usr_prf){
         let result = await pool.query(`
         select * from getCourses($1)`,
         [id_usr_prf]);
@@ -12,25 +12,25 @@ module.exports = {
         }
         return result.rows;
     },
-    saveCourse : async function(id_usr_prf, data){
+    guardar : async function(id_usr_prf, data){
         const result = await pool.query(`
         select * from saveCourse($1, $2, $3);`
         ,[id_usr_prf, data.grado, data.paralelo]);
         return result.rows[0];
     },
-    changeColor : async function(data){
+    cambiarColor : async function(data){
         const result = await pool.query(`
         select cambiarColor($1, $2);`
         ,[data.id_curso, data.color]);
         return result.rows[0].cambiarcolor;
     },
-    getCourseById : async function(id_usr_prf, id_curso){
+    obtenerCursoPorId : async function(id_usr_prf, id_curso){
         const result = await pool.query(`
         select * from getCourseById($1, $2);`
         ,[id_usr_prf, id_curso]);
         return result.rows[0];
     },
-    deleteCourseById : async function(id_usr, id_curso){
+    eliminarPorId : async function(id_usr, id_curso){
         const result = await pool.query(`
         select * from deleteCourse($1, $2);`
         ,[id_usr, id_curso]);
@@ -70,7 +70,7 @@ module.exports = {
         }
         return profList.rows;
     },
-    get_est_by_curso : async function(id_usr_adm, id_curso){
+    puntajePorIdCurso : async function(id_curso){
         let listEst = await pool.query(`
         select e.id_estudiante, e.id_usuario from estudiante e 
         where e.id_curso = $1 and e.disabled = false order by e.id_estudiante asc`

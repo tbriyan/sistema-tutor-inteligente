@@ -9,7 +9,7 @@ const flash = require("connect-flash");
 //Imports
 const loginRouter = require("./router/login/login.route");
 const usuariosRouter = require("./router/usuarios/usuarios.route");
-const cursosRouter = require("./router/cursos/cursos.route");
+const cursosRouter = require("./core/cursos/cursos.route");
 const tutorRouter = require("./router/tutor/tutor.route");
 //Inicializaciones
 require("./config/passport");
