@@ -1,5 +1,5 @@
 const cursosRepository = require("./cursos.repository");
-const { getSelf } = require("../../models/usuarios/usuarios.model");
+const { getSelf } = require("../../core/usuarios/usuarios.repository");
 //PDF-CREATOR
 const fs = require("fs");
 const path = require("path");

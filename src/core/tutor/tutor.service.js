@@ -1,6 +1,6 @@
 const { obtenerRol, obtenerEstilo } = require("../../utils/login.helper");
-const modelPaginaPrincipal = require("../../models/tutor/Model_pagina_principal");
-const { getSelf } = require("../../models/usuarios/usuarios.model");
+const modelPaginaPrincipal = require("../../core/tutor/tutor.repository");
+const { getSelf } = require("../usuarios/usuarios.repository");
 module.exports = {
     //Show Temas y Lecciones
     listLecciones : async function(req, res){

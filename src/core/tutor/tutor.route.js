@@ -1,5 +1,5 @@
 const { isLoggedIn } = require("../../utils/login.helper");
-const controller = require("../../controllers/tutor/Controller_pagina_principal");
+const controller = require("../../core/tutor/tutor.service");
 const router = require("express").Router();
 
 //Rutas de Lecciones y Temas

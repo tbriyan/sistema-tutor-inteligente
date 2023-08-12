@@ -1,5 +1,5 @@
 const pool = require("../../config/database");
-const usuarioModel = require("../../models/usuarios/usuarios.model");
+const usuarioModel = require("../../core/usuarios/usuarios.repository");
 const path = require("path");
 const { obtenerRol } = require("../../utils/login.helper");
 const XLSX = require('xlsx');

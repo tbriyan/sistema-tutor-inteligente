@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controller = require("../../controllers/usuarios/usuarios.controller");
+const controller = require("../../core/usuarios/usuarios.service");
 const {isLoggedIn} = require("../../utils/login.helper");
 const { uploadPhotoProfile, uploadFile } = require("../../utils/usuarios.helper");
 
