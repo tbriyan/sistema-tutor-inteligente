@@ -56,7 +56,7 @@ module.exports = {
         if(req.user.rol === rolEnum.ADMINISTRADOR || req.user.rol === rolEnum.PROFESOR){
             const html = fs.readFileSync(path.join(__dirname,"../../views/report-template0.html"), "utf-8");
             const filename = req.user.username+"_report0"+".pdf";
-            const result = await cursosRepository.get_est_by_curso(req.user.id_usuario, req.params.id);
+            const result = await cursosRepository.puntajePorIdCurso(req.params.id);
             let document = {
                 html: html,
                 data: {
@@ -81,12 +81,14 @@ module.exports = {
 
     },
     listEstudiantesByCourse : async function(req, res){
+        console.log(req.params)
         if(req.user.rol === rolEnum.ADMINISTRADOR){
-            const result = await cursosRepository.get_est_by_curso(req.user.id_usuario, req.params.id);
+            const result = await cursosRepository.puntajePorIdCurso(req.params.id);
+            console.log(result)
             res.json(result);         
         }
         if(req.user.rol === rolEnum.PROFESOR){
-            const result = await cursosRepository.get_est_by_curso(req.user.id_usuario, req.params.id);
+            const result = await cursosRepository.puntajePorIdCurso(req.params.id);
             res.json(result);
         }
     },

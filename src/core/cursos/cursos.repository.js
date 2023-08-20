@@ -71,6 +71,7 @@ module.exports = {
         return profList.rows;
     },
     puntajePorIdCurso : async function(id_curso){
+        console.log(id_curso)
         let listEst = await pool.query(`
         select e.id_estudiante, e.id_usuario from estudiante e 
         where e.id_curso = $1 and e.disabled = false order by e.id_estudiante asc`
